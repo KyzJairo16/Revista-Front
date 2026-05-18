@@ -11,12 +11,7 @@ import { LoginComponent } from './login/login';
 import { AppRoutingModule } from './app-routing-module';
 import { PerfilEditorComponent } from './perfil-editor/perfil-editor';
 import { AdminComponent } from './admin/admin';
-<<<<<<< Updated upstream
 import { LectorComponent } from './lector/lector';
-
-=======
-import { Lector } from './lector/lector';
->>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -25,11 +20,7 @@ import { Lector } from './lector/lector';
     LoginComponent,
     PerfilEditorComponent,
     AdminComponent,
-<<<<<<< Updated upstream
     LectorComponent,
-=======
-    Lector,
->>>>>>> Stashed changes
   ],
   imports: [BrowserModule, CommonModule, RouterModule, AppRoutingModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
