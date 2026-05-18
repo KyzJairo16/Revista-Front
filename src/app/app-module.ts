@@ -11,10 +11,18 @@ import { LoginComponent } from './login/login';
 import { AppRoutingModule } from './app-routing-module';
 import { PerfilEditorComponent } from './perfil-editor/perfil-editor';
 import { AdminComponent } from './admin/admin';
+import { LectorComponent } from './lector/lector';
 
 
 @NgModule({
-  declarations: [App, RevistaComponent, LoginComponent, PerfilEditorComponent, AdminComponent],
+  declarations: [
+    App,
+    RevistaComponent,
+    LoginComponent,
+    PerfilEditorComponent,
+    AdminComponent,
+    LectorComponent,
+  ],
   imports: [BrowserModule, CommonModule, RouterModule, AppRoutingModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
   bootstrap: [App],

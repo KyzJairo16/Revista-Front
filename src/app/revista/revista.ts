@@ -6,7 +6,7 @@ import { AutentificacionService } from '../services/autentificacion';
   selector: 'app-revista',
   standalone: false,
   templateUrl: './revista.html',
-  styleUrl: './revista.css'
+  styleUrl: './revista.css',
 })
 export class RevistaComponent {
   public autentificacionService = inject(AutentificacionService);
@@ -28,7 +28,7 @@ export class RevistaComponent {
 
     const usuarioDTO = {
       username: this.usuarioInput.trim(),
-      password: this.contraseniaInput
+      password: this.contraseniaInput,
     };
 
     this.autentificacionService.login(usuarioDTO).subscribe({
@@ -54,18 +54,23 @@ export class RevistaComponent {
               this.router.navigate(['/comentador']);
               break;
 
-            case 'USUARIO':
+            case 'USUARIO': // <-- Este es tu rol de Lector del backend
+              this.router.navigate(['/lector']); // <-- Despachado directo a su nueva interfaz limpia
+              break;
+
             default:
-              this.router.navigate(['/']); // Redirección al feed público general
+              this.router.navigate(['/']); // Fallback a la raíz en caso de cualquier otra inconsistencia
               break;
           }
         });
       },
       error: (err) => {
         console.error('Error de autenticación en el servidor:', err);
-        alert('Error de Autenticación: Nombre de usuario o contraseña incorrectos en el servidor central.');
+        alert(
+          'Error de Autenticación: Nombre de usuario o contraseña incorrectos en el servidor central.',
+        );
         this.limpiarFormularioAcceso();
-      }
+      },
     });
   }
 
