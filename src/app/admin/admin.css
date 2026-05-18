@@ -21,7 +21,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 30px;
-  background-color: #4a5568;
+  background-color: #bb9cef;
   color: white;
   border-bottom: 2px solid rgba(255, 255, 255, 0.05);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -33,7 +33,7 @@
 .user-badge { font-size: 0.9rem; font-weight: 600; color: #f5f5f7; }
 
 .role-pill-admin {
-  background-color: #e11d48;
+  background-color: #4f347e;
   color: white;
   padding: 3px 8px;
   border-radius: 4px;
@@ -164,9 +164,9 @@
   border-radius: 20px;
   display: inline-block;
 }
-.rol-admin { background-color: #ffe4e6; color: #9f1239; }
-.rol-editor { background-color: #f3e8ff; color: #6b21a8; }
-.rol-suscriptor { background-color: #e0f2fe; color: #0369a1; }
+.rol-admin { background-color: #bb9cef; color: #050505; }
+.rol-editor { background-color: #f3e8ff; color: #a64af1; }
+.rol-suscriptor { background-color: #8567ba; color: #050505; }
 
 /* Botones de Acción de la Tabla */
 .text-center-actions { text-align: center; width: 220px; }
@@ -183,8 +183,8 @@
 }
 .edit-btn { background-color: #e2e8f0; color: #334155; }
 .edit-btn:hover { background-color: #cbd5e1; }
-.delete-btn { background-color: #fee2e2; color: #991b1b; }
-.delete-btn:hover { background-color: #fca5a5; }
+.delete-btn { background-color: #bb9cef; color: #4f347e; }
+.delete-btn:hover { background-color: #bb9cef; }
 
 /* Filtros */
 .filter-search-container {
@@ -226,7 +226,7 @@
 .btn-form-save { background-color: #1e293b; color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
 .btn-form-save:hover { background-color: #0f172a; }
 
-.confirmation-card { max-width: 420px; border-top: 5px solid #ef4444; text-align: center; padding: 24px; }
+.confirmation-card { max-width: 420px; border-top: 5px solid #4f347e; text-align: center; padding: 24px; }
 .modal-body-text { margin: 1rem 0; color: #334155; line-height: 1.5; }
 .mt-4 { margin-top: 1.5rem; }
 .animate-fade { animation: fadeIn 0.2s ease-in-out; }

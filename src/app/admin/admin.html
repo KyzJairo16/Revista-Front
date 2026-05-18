@@ -7,7 +7,7 @@
 
     <div class="user-status-ribbon">
       <span class="user-badge">👤 {{ nombreUsuarioLogueado }}</span>
-      <span class="role-pill-admin">ADMINISTRADOR</span>
+      <span class="role-pill-admin">ADMINISTRATIVO</span>
       <button class="btn-logout-retro" (click)="cerrarSesionAdmin()">Cerrar Sesión 🚪</button>
     </div>
   </nav>
@@ -29,11 +29,25 @@
           <span class="stat-label">Editores Activos</span>
         </div>
       </div>
+      <div class="stat-card color-blue">
+        <div class="stat-icon">💬</div>
+        <div class="stat-info-block">
+          <span class="stat-number">{{ contarPorRol('COMENTADOR') }}</span>
+          <span class="stat-label">Comentadores</span>
+        </div>
+      </div>
+      <div class="stat-card color-purple">
+        <div class="stat-icon">📖</div>
+        <div class="stat-info-block">
+          <span class="stat-number">{{ contarPorRol('USUARIO') }}</span>
+          <span class="stat-label">Usuarios Generales</span>
+        </div>
+      </div>
       <div class="stat-card color-gold">
         <div class="stat-icon">👑</div>
         <div class="stat-info-block">
-          <span class="stat-number">{{ contarPorRol('ADMINISTRADOR') }}</span>
-          <span class="stat-label">Administradores</span>
+          <span class="stat-number">{{ contarPorRol('ADMINISTRATIVO') }}</span>
+          <span class="stat-label">Administrativos</span>
         </div>
       </div>
     </div>
@@ -61,9 +75,10 @@
           (ngModelChange)="filtrarUsuarios()"
           class="select-filter">
           <option value="TODO">Rol: Todos los usuarios</option>
-          <option value="ADMINISTRADOR">Administradores</option>
+          <option value="ADMINISTRATIVO">Administrativos</option>
           <option value="EDITOR">Editores</option>
-          <option value="SUSCRIPTOR">Suscriptores</option>
+          <option value="COMENTADOR">Comentadores</option>
+          <option value="USUARIO">Usuarios</option>
         </select>
       </div>
     </div>
@@ -85,12 +100,13 @@
         <tbody>
         <tr *ngFor="let usuario of usuariosFiltrados" class="row-usuario-item">
           <td><span class="id-badge">#{{ usuario.id }}</span></td>
-          <td><strong>{{ usuario.usuario }}</strong></td>
+          <td><strong>{{ usuario.username }}</strong></td>
           <td>
               <span class="badge-rol-tipo" [ngClass]="{
-                'rol-admin': usuario.rol === 'ADMINISTRADOR',
+                'rol-admin': usuario.rol === 'ADMINISTRADOR' || usuario.rol === 'ADMINISTRATIVO',
                 'rol-editor': usuario.rol === 'EDITOR',
-                'rol-suscriptor': usuario.rol === 'SUSCRIPTOR'
+                'rol-comentador': usuario.rol === 'COMENTADOR',
+                'rol-suscriptor': usuario.rol === 'USUARIO' || usuario.rol === 'SUSCRIPTOR'
               }">
                 {{ usuario.rol }}
               </span>
@@ -127,16 +143,19 @@
       </div>
 
       <div class="form-group-field">
-        <label>{{ modoEdicion ? 'Nueva Contraseña (Dejar en blanco para conservar)' : 'Contraseña de Acceso' }}</label>
+        <label>
+          {{ modoEdicion ? 'Nueva Contraseña (Dejar en blanco para conservar)' : 'Contraseña de Acceso' }}
+        </label>
         <input type="password" [(ngModel)]="contrasenaForm" placeholder="••••••••">
       </div>
 
       <div class="form-group-field">
         <label>Rol de Acceso en el Sistema</label>
         <select [(ngModel)]="rolForm">
-          <option value="SUSCRIPTOR">Suscriptor (Lector)</option>
+          <option value="USUARIO">Usuario (Lector)</option>
+          <option value="COMENTADOR">Comentador (Opinión y Foros)</option>
           <option value="EDITOR">Editor (Creador de Contenido)</option>
-          <option value="ADMINISTRADOR">Administrador (Gestión total)</option>
+          <option value="ADMINISTRATIVO">Administrativo (Gestión total)</option>
         </select>
       </div>
     </div>
@@ -155,7 +174,7 @@
     <h3>⚠️ ¿Confirmas la eliminación de la cuenta?</h3>
     <p class="modal-body-text text-center">
       Estás a punto de borrar permanentemente al usuario:<br>
-      <strong>"{{ usuarioParaEliminar.usuario }}"</strong> con rol <strong>{{ usuarioParaEliminar.rol }}</strong>.<br>
+      <strong>"{{ usuarioParaEliminar.username }}"</strong> con rol <strong>{{ usuarioParaEliminar.rol }}</strong>.<br>
       Esta acción lo removerá por completo del sistema.
     </p>
     <div class="modal-form-actions mt-4">

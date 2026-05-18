@@ -9,12 +9,10 @@ import { AutentificacionService } from '../services/autentificacion';
   styleUrl: './revista.css'
 })
 export class RevistaComponent {
-  // Inyección de dependencias con la API inject de Angular
   public autentificacionService = inject(AutentificacionService);
   private router = inject(Router);
-  private zone = inject(NgZone); // Forzado de zona de navegación activa
+  private zone = inject(NgZone);
 
-  // Captura de datos bindeados mediante [(ngModel)] en la pantalla crema
   usuarioInput: string = '';
   contraseniaInput: string = '';
 
@@ -34,8 +32,10 @@ export class RevistaComponent {
     };
 
     this.autentificacionService.login(usuarioDTO).subscribe({
-      next: (respuesta: any) => {
-        const rolDetectado = this.autentificacionService.getRol();
+      next: () => {
+        const rolCrudo = this.autentificacionService.getRol();
+        const rolDetectado = rolCrudo ? rolCrudo.toUpperCase().trim() : 'USUARIO';
+
         alert(`¡Conexión Exitosa con Spring Boot!\nBienvenido. Rol activo: ${rolDetectado}`);
 
         // Forzamos a Angular a procesar la redirección en la zona principal
@@ -46,6 +46,7 @@ export class RevistaComponent {
               break;
 
             case 'ADMINISTRADOR':
+            case 'ADMINISTRATIVO':
               this.router.navigate(['/admin']);
               break;
 
@@ -53,15 +54,17 @@ export class RevistaComponent {
               this.router.navigate(['/comentador']);
               break;
 
+            case 'USUARIO':
             default:
-              this.router.navigate(['/']);
+              this.router.navigate(['/']); // Redirección al feed público general
               break;
           }
         });
       },
       error: (err) => {
         console.error('Error de autenticación en el servidor:', err);
-        alert('Error de Autenticación: Nombre de usuario o contraseña incorrectos en Spring Boot.');
+        alert('Error de Autenticación: Nombre de usuario o contraseña incorrectos en el servidor central.');
+        this.limpiarFormularioAcceso();
       }
     });
   }

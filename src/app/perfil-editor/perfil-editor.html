@@ -150,7 +150,7 @@
       </div>
 
       <div class="form-group-field">
-        <label>Título / Signo</label>
+        <label>{{ tipoForm === 'NOTICIA' ? 'Título de la Noticia' : 'Signo Zodiacal' }}</label>
         <input type="text" [(ngModel)]="tituloForm" placeholder="Escribe el título o signo aquí...">
       </div>
 
@@ -160,7 +160,7 @@
       </div>
 
       <div class="form-group-field">
-        <label>Cuerpo / Desarrollo del Contenido</label>
+        <label>{{ tipoForm === 'NOTICIA' ? 'Cuerpo / Desarrollo del Contenido' : 'Predicción / Mensaje Astral' }}</label>
         <textarea rows="6" [(ngModel)]="contenidoForm" placeholder="Escribe todo el desarrollo de la publicación aquí..."></textarea>
       </div>
     </div>
@@ -176,11 +176,11 @@
 
 <div class="modal-backdrop" *ngIf="publicacionSeleccionada">
   <div class="modal-card">
-    <h3>{{ publicacionSeleccionada.titulo }}</h3>
-    <span class="badge-tipo-publicacion" [ngClass]="publicacionSeleccionada.tipo === 'NOTICIA' ? 'color-noticia' : 'color-horoscopo'">
-      {{ publicacionSeleccionada.tipo }}
+    <h3>{{ publicacionSeleccionada?.titulo }}</h3>
+    <span class="badge-tipo-publicacion" [ngClass]="publicacionSeleccionada?.tipo === 'NOTICIA' ? 'color-noticia' : 'color-horoscopo'">
+      {{ publicacionSeleccionada?.tipo }}
     </span>
-    <p class="modal-body-text">{{ publicacionSeleccionada.contenido }}</p>
+    <p class="modal-body-text">{{ publicacionSeleccionada?.contenido }}</p>
     <button class="btn-submit btn-black" (click)="publicacionSeleccionada = null">Cerrar Visualización</button>
   </div>
 </div>
@@ -190,7 +190,7 @@
     <h3>⚠️ ¿Confirmas la eliminación?</h3>
     <p class="modal-body-text text-center">
       Estás a punto de borrar permanentemente la publicación titulada:<br>
-      <strong>"{{ publicacionParaEliminar.titulo }}"</strong>.<br>Esta acción no se puede deshacer.
+      <strong>"{{ publicacionParaEliminar?.titulo }}"</strong>.<br>Esta acción no se puede deshacer.
     </p>
     <div class="modal-form-actions mt-4">
       <button class="btn-form-cancel" (click)="publicacionParaEliminar = null">Cancelar</button>
