@@ -19,22 +19,22 @@
     <form class="form-section" (submit)="$event.preventDefault()">
 
       <div class="input-group">
-        <span class="icon">👤</span>
+        <span class="icon"><i class="fa-solid fa-user"></i></span>
         <input type="text" [(ngModel)]="nombreCompleto" name="nombreCompleto" placeholder="Nombre Completo">
       </div>
 
       <div class="input-group">
-        <span class="icon">🆔</span>
+        <span class="icon"><i class="fa-solid fa-id-card"></i></span>
         <input type="text" [(ngModel)]="nombreUsuario" name="nombreUsuario" placeholder="Nombre de Usuario">
       </div>
 
       <div class="input-group">
-        <span class="icon">🔒</span>
+        <span class="icon"><i class="fa-solid fa-lock"></i></span>
         <input type="password" [(ngModel)]="contrasenia" name="contrasenia" placeholder="Contraseña">
       </div>
 
       <div class="input-group">
-        <span class="icon">🔒</span>
+        <span class="icon"><i class="fa-solid fa-lock"></i></span>
         <input type="password" [(ngModel)]="confirmarContrasenia" name="confirmarContrasenia" placeholder="Confirmar Contraseña">
       </div>
 
@@ -85,8 +85,8 @@
     </form>
 
     <div class="switch-auth-mode">
-      <div class="user-icon-inline">👤 ¿Ya tienes una cuenta?</div>
-      <button type="button" class="btn-signin-link" (click)="volverARevista()">INICIAR SESIÓN</button>
+      <div class="user-icon-inline"><i class="fa-solid fa-user"></i> ¿Ya tienes una cuenta?</div>
+      <button type="button" class="btn-signin-link" (click)="volverARevista()"> <i class="fa-solid fa-right-to-bracket"></i>INICIAR SESIÓN</button>
     </div>
 
   </div>

@@ -1,6 +1,4 @@
-/* ==========================================================================
-   ESTRUCTURA DE FONDO BEIGE CON TEXTURA GRANULADA (Idéntica al Editor)
-   ========================================================================== */
+
 :host {
   display: block;
   min-height: 100vh;
@@ -15,7 +13,7 @@
   padding-bottom: 3rem;
 }
 
-/* Navbar Personalizada de Admin (Color distintivo coral/lavanda oscuro) */
+
 .navbar-interno-admin {
   display: flex;
   justify-content: space-between;
@@ -55,14 +53,14 @@
 }
 .btn-logout-retro:hover { background-color: #dc2626; color: white; border-color: #ef4444; }
 
-/* Layout Base */
+
 .admin-content-layout {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Grilla de Tarjetas de Estadísticas */
+
 .stats-grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -89,7 +87,7 @@
 .color-purple { border-left: 5px solid #8b5cf6; }
 .color-gold { border-left: 5px solid #f59e0b; }
 
-/* Control Ribbon */
+
 .admin-control-ribbon {
   display: flex;
   justify-content: space-between;
@@ -115,7 +113,7 @@
 }
 .btn-add-user:hover { background: #0f172a; }
 
-/* Tabla de Administración Estilizada */
+
 .table-responsive-container {
   background: white;
   border: 1px solid #e2dbd0;
@@ -156,7 +154,7 @@
   font-weight: bold;
 }
 
-/* Badges de Roles */
+
 .badge-rol-tipo {
   font-size: 0.75rem;
   font-weight: bold;
@@ -168,7 +166,7 @@
 .rol-editor { background-color: #f3e8ff; color: #a64af1; }
 .rol-suscriptor { background-color: #8567ba; color: #050505; }
 
-/* Botones de Acción de la Tabla */
+
 .text-center-actions { text-align: center; width: 220px; }
 .action-buttons-group { display: flex; gap: 8px; justify-content: center; }
 
@@ -186,7 +184,7 @@
 .delete-btn { background-color: #bb9cef; color: #4f347e; }
 .delete-btn:hover { background-color: #bb9cef; }
 
-/* Filtros */
+
 .filter-search-container {
   display: flex; gap: 1rem; background: white; border: 1px solid #e2dbd0;
   padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;
@@ -205,7 +203,7 @@
   text-align: center; border-radius: 12px; color: #64748b;
 }
 
-/* Modales Dinámicos */
+
 .modal-backdrop {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; z-index: 9999;
@@ -232,7 +230,7 @@
 .animate-fade { animation: fadeIn 0.2s ease-in-out; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Responsive */
+
 @media (max-width: 800px) {
   .stats-grid-container { grid-template-columns: 1fr; gap: 12px; }
   .filter-search-container { flex-direction: column; }

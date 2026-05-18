@@ -165,7 +165,7 @@ export class AdminComponent implements OnInit {
       payload.password = this.contrasenaForm;
     }
 
-    // CORRECCIÓN TS2769: Objeto unificado para pasar cabeceras de seguridad y tipo de respuesta plano de forma válida
+
     const opcionesRequest = {
       headers: this.autentificacionService.getHeaders().headers,
       responseType: 'text' as 'json'
@@ -191,7 +191,7 @@ export class AdminComponent implements OnInit {
             this.modalFormularioAbierto = false;
           } else {
             console.error(err);
-            alert(`❌ Error al actualizar usuario.`);
+            alert(` Error al actualizar usuario.`);
           }
         }
       });
@@ -211,7 +211,7 @@ export class AdminComponent implements OnInit {
             this.modalFormularioAbierto = false;
           } else {
             console.error(err);
-            alert(`❌ Error al crear usuario. Puede que el nombre ya exista.`);
+            alert(` Error al crear usuario. Puede que el nombre ya exista.`);
           }
         }
       });
@@ -220,7 +220,7 @@ export class AdminComponent implements OnInit {
 
   pedirConfirmacionEliminar(usuario: UsuarioSistema): void {
     if (usuario.username === this.nombreUsuarioLogueado) {
-      alert('❌ No puedes eliminar tu propia cuenta de administrativo en sesión.');
+      alert(' No puedes eliminar tu propia cuenta de administrativo en sesión.');
       return;
     }
     this.usuarioParaEliminar = usuario;
@@ -239,7 +239,7 @@ export class AdminComponent implements OnInit {
 
     this.http.delete(urlDelete, opcionesRequest).subscribe({
       next: () => {
-        alert('🗑️ Usuario eliminado correctamente.');
+        alert(' Usuario eliminado correctamente.');
         this.listaUsuarios = this.listaUsuarios.filter(u => u.id !== this.usuarioParaEliminar?.id);
         this.filtrarUsuarios();
         this.usuarioParaEliminar = null;
@@ -254,9 +254,9 @@ export class AdminComponent implements OnInit {
         }
 
         if (err.status === 403) {
-          alert('❌ Error 403: No posees el rol requerido (ADMINISTRATIVO) para esta acción.');
+          alert(' Error 403: No posees el rol requerido (ADMINISTRATIVO) para esta acción.');
         } else {
-          alert(`❌ No se pudo eliminar al usuario. Código HTTP: ${err.status}`);
+          alert(` No se pudo eliminar al usuario. Código HTTP: ${err.status}`);
         }
       }
     });
