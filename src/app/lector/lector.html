@@ -1,0 +1,125 @@
+<<<<<<< Updated upstream
+<div class="workspace-lector animate-fade">
+
+  <nav class="navbar-interno-editor">
+    <div class="brand-logo-container">
+      <img src="logo.png" alt="NextGen Digital Logo" class="logo-imagen-subida">
+    </div>
+
+    <div class="user-status-ribbon">
+      <span class="user-badge">👤 Suscriptor / Lector</span>
+      <button class="btn-logout-retro" (click)="cerrarSesion()">Cerrar Sesión 🚪</button>
+    </div>
+  </nav>
+
+  <div class="magazine-content-layout">
+
+    <div class="editor-control-ribbon">
+      <span class="ribbon-title">📖 Panel de Lectura: Estás viendo el contenido oficial de la revista digital.</span>
+    </div>
+
+    <div class="filter-search-container">
+      <div class="filter-field">
+        <span class="filter-icon">🔍</span>
+        <input
+          type="text"
+          placeholder="Buscar noticia o sección astral..."
+          [(ngModel)]="busquedaTexto"
+          (ngModelChange)="filtrarYClasificar()"
+          class="input-search">
+      </div>
+
+      <div class="filter-field drop-field">
+        <span class="filter-icon">📁</span>
+        <select
+          [(ngModel)]="filtroTipo"
+          (ngModelChange)="filtrarYClasificar()"
+          class="select-filter">
+          <option value="TODO">Mostrar: Todo el contenido</option>
+          <option value="NOTICIA">Solo Noticias</option>
+          <option value="HOROSCOPO">Solo Horóscopos</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="noticias.length === 0 && horoscopos.length === 0" class="no-results-card">
+      📭 No hay publicaciones cargadas en el sistema en este momento o no coinciden con tu búsqueda.
+    </div>
+
+    <div *ngIf="noticias.length > 0 && (filtroTipo === 'TODO' || filtroTipo === 'NOTICIA')" class="seccion-bloque-editorial">
+      <h2 class="editor-main-title">📰 ÚLTIMAS NOTICIAS</h2>
+
+      <div class="noticias-layout-complex">
+
+        <div class="noticia-featured-card" (click)="abrirVisorLectura(noticias[0])">
+          <div class="featured-image-wrapper">
+            <img *ngIf="noticias[0].imagenUrl" [src]="noticias[0].imagenUrl" class="img-content-fluid" alt="Noticia Principal">
+            <div *ngIf="!noticias[0].imagenUrl" class="placeholder-img-big">🖼️ Imagen no disponible</div>
+          </div>
+          <div class="featured-info">
+            <span class="badge-tipo-publicacion color-noticia">{{ noticias[0].tipo }}</span>
+            <span *ngIf="noticias[0].categoria" class="badge-tipo-publicacion color-categoria">📁 {{ noticias[0].categoria }}</span>
+            <h3>{{ noticias[0].titulo }}</h3>
+            <p>{{ noticias[0].contenido }}</p>
+          </div>
+        </div>
+
+        <div class="noticias-secondary-grid">
+          <ng-container *ngFor="let item of noticias; let i = index">
+            <div class="card-publicacion" *ngIf="i > 0" (click)="abrirVisorLectura(item)">
+              <div class="image-wrapper">
+                <img *ngIf="item.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Noticia">
+                <div *ngIf="!item.imagenUrl" class="placeholder-img">🖼️</div>
+              </div>
+              <div class="card-info">
+                <span class="badge-tipo-publicacion color-noticia">{{ item.tipo }}</span>
+                <span *ngIf="item.categoria" class="badge-tipo-publicacion color-categoria">📁 {{ item.categoria }}</span>
+                <h4>{{ item.titulo }}</h4>
+                <p class="card-summary">{{ item.contenido }}</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="horoscopos.length > 0 && (filtroTipo === 'TODO' || filtroTipo === 'HOROSCOPO')" class="seccion-bloque-editorial mt-5">
+      <h2 class="editor-main-title">🔮 SECCIÓN ASTRAL & HORÓSCOPOS</h2>
+
+      <div class="grid-horoscopos-simetrica">
+        <div class="card-publicacion horoscopo-card" *ngFor="let item of horoscopos" (click)="abrirVisorLectura(item)">
+          <div class="image-wrapper">
+            <img *ngIf="item.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Signo Zodiacal">
+            <div *ngIf="!item.imagenUrl" class="placeholder-img">✨</div>
+          </div>
+          <div class="card-info">
+            <span class="badge-tipo-publicacion color-horoscopo">{{ item.tipo }}</span>
+            <h4>{{ item.titulo }}</h4>
+            <p class="card-summary text-center-zodiac">{{ item.contenido }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="publicacionSeleccionada">
+  <div class="modal-card animate-scaleUp">
+    <h3>{{ publicacionSeleccionada?.titulo }}</h3>
+    <span class="badge-tipo-publicacion" [ngClass]="publicacionSeleccionada?.tipo === 'NOTICIA' ? 'color-noticia' : 'color-horoscopo'">
+      {{ publicacionSeleccionada?.tipo }}
+    </span>
+
+    <div class="modal-body-content mt-3">
+      <img *ngIf="publicacionSeleccionada?.imagenUrl" [src]="publicacionSeleccionada?.imagenUrl" class="img-modal-fluid mb-3" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+      <p class="modal-body-text" style="white-space: pre-wrap; line-height: 1.6;">{{ publicacionSeleccionada?.contenido }}</p>
+    </div>
+
+    <button class="btn-submit btn-black mt-4" (click)="publicacionSeleccionada = null">Finalizar Lectura</button>
+  </div>
+</div>
+=======
+<p>lector works!</p>
+>>>>>>> Stashed changes

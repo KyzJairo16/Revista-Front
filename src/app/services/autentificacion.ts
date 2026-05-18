@@ -16,7 +16,7 @@ export class AutentificacionService {
 
   /**
    * Envía las credenciales reales a Spring Boot.
-   * Guarda el token, el rol normalizado y el nombre de usuario ingresado.
+   * Guarda el token, el rol unificado y el nombre de usuario ingresado.
    */
   login(credenciales: any): Observable<any> {
     return this.http.post<any>(`${this.URL_API}/login`, credenciales).pipe(
@@ -24,16 +24,15 @@ export class AutentificacionService {
         if (respuesta && respuesta.token) {
           localStorage.setItem('token_revista', respuesta.token);
 
-          // Normalizar el rol directamente al recibirlo del backend
+          // Guardamos el rol limpio del backend directamente pasándolo a mayúsculas
           let rolBackend = respuesta.rol ? respuesta.rol.toUpperCase().trim() : 'USUARIO';
+
           if (rolBackend.startsWith('ROLE_')) {
             rolBackend = rolBackend.replace('ROLE_', '');
           }
+
           if (rolBackend === 'ADMINISTRADOR') {
             rolBackend = 'ADMINISTRATIVO';
-          }
-          if (rolBackend === 'SUSCRIPTOR') {
-            rolBackend = 'USUARIO';
           }
 
           localStorage.setItem('rol_revista', rolBackend);
@@ -52,7 +51,7 @@ export class AutentificacionService {
 
   /**
    * Extrae y decodifica el Rol guardado dentro del Token JWT o del localStorage,
-   * limpiando cualquier prefijo de Spring Security para evitar fallos de enrutamiento.
+   * garantizando consistencia limpia de texto.
    */
   getRol(): string {
     const token = localStorage.getItem('token_revista');
@@ -61,30 +60,24 @@ export class AutentificacionService {
     if (token) {
       try {
         const tokenDecodificado: any = jwtDecode(token);
-        // Mapea claims comunes de Spring Security: 'role', 'roles' o 'authorities'
         rolDetectado = tokenDecodificado.role || tokenDecodificado.roles || tokenDecodificado.authorities || '';
       } catch (error) {
         console.warn('No se pudo decodificar el JWT, usando respaldo de localStorage.');
       }
     }
 
-    // Si el token no tenía el rol o falló la decodificación, usamos el respaldo en texto plano
     if (!rolDetectado) {
-      rolDetectado = localStorage.getItem('rol_revista') || 'SIN_AUTENTICAR';
+      rolDetectado = localStorage.getItem('rol_revista') || 'USUARIO';
     }
 
-    // CONTROL DE DAÑOS: Limpieza de prefijos de Spring Security
     if (rolDetectado.startsWith('ROLE_')) {
       rolDetectado = rolDetectado.replace('ROLE_', '');
     }
 
     rolDetectado = rolDetectado.toUpperCase().trim();
 
-    // Sincronización final estricta de roles administrativos y de lectura
     if (rolDetectado === 'ADMINISTRADOR') {
       rolDetectado = 'ADMINISTRATIVO';
-    } else if (rolDetectado === 'SUSCRIPTOR') {
-      rolDetectado = 'USUARIO';
     }
 
     return rolDetectado;
