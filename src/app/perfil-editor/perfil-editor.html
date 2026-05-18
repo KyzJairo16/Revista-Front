@@ -6,22 +6,22 @@
     </div>
 
     <div class="user-status-ribbon">
-      <span class="user-badge">👤 {{ nombreUsuarioLogueado }}</span>
+      <span class="user-badge"><i class="fa-solid fa-user"></i> {{ nombreUsuarioLogueado }}</span>
       <span class="role-pill">EDITOR</span>
-      <button class="btn-logout-retro" (click)="cerrarSesionEditor()">Cerrar Sesión 🚪</button>
+      <button class="btn-logout-retro" (click)="cerrarSesionEditor()">Cerrar Sesión <i class="fa-solid fa-right-from-bracket"></i></button>
     </div>
   </nav>
 
   <div class="magazine-content-layout">
 
     <div class="editor-control-ribbon">
-      <span class="ribbon-title">📋 Edita, crea o elimina publicaciones del sistema central</span>
-      <button class="btn-add-entry" (click)="abrirModalCrear()">➕ REDACTAR NUEVA PUBLICACIÓN</button>
+      <span class="ribbon-title"><i class="fa-solid fa-clipboard-list"></i> Edita, crea o elimina publicaciones del sistema central</span>
+      <button class="btn-add-entry" (click)="abrirModalCrear()"> <i class="fa-solid fa-square-plus"></i> REDACTAR NUEVA PUBLICACIÓN</button>
     </div>
 
     <div class="filter-search-container">
       <div class="filter-field">
-        <span class="filter-icon">🔍</span>
+        <span class="filter-icon"><i class="fa-solid fa-folder"></i></span>
         <input
           type="text"
           placeholder="Buscar noticia o horóscopo..."
@@ -31,7 +31,7 @@
       </div>
 
       <div class="filter-field drop-field">
-        <span class="filter-icon">📁</span>
+        <span class="filter-icon"><i class="fa-solid fa-folder"></i></span>
         <select
           [(ngModel)]="filtroTipo"
           (ngModelChange)="filtrarPublicaciones()"
@@ -44,31 +44,31 @@
     </div>
 
     <div *ngIf="noticias.length === 0 && horoscopos.length === 0" class="no-results-card">
-      📭 No se encontraron publicaciones registradas en la base de datos del servidor.
+      <i class="fa-solid fa-inbox"></i> No se encontraron publicaciones registradas en la base de datos del servidor.
     </div>
 
     <div *ngIf="noticias.length > 0" class="seccion-bloque-editorial">
-      <h2 class="editor-main-title">📰 SECCIÓN DE NOTICIAS</h2>
+      <h2 class="editor-main-title"><i class="fa-solid fa-newspaper"></i> SECCIÓN DE NOTICIAS</h2>
 
       <div class="noticias-layout-complex">
 
         <div class="noticia-featured-card" (click)="abrirPublicacion(noticias[0])">
           <div class="featured-image-wrapper">
             <img *ngIf="noticias[0].imagenUrl" [src]="noticias[0].imagenUrl" class="img-content-fluid" alt="Noticia Principal">
-            <div *ngIf="!noticias[0].imagenUrl" class="placeholder-img-big">🖼️ Imagen no especificada en BD</div>
+            <div *ngIf="!noticias[0].imagenUrl" class="placeholder-img-big"><i class="fa-solid fa-image"></i> Imagen no especificada en BD</div>
 
             <div class="card-editor-overlay">
               <button class="btn-overlay-action edit-color" (click)="$event.stopPropagation(); editarItem(noticias[0])">
-                ✏️ Editar
+                <i class="fa-solid fa-pen-to-square"></i> Editar
               </button>
               <button class="btn-overlay-action delete-color" (click)="$event.stopPropagation(); pedirConfirmacionEliminar(noticias[0])">
-                🗑️ Eliminar
+                <i class="fa-solid fa-trash"></i>  Eliminar
               </button>
             </div>
           </div>
           <div class="featured-info">
             <span class="badge-tipo-publicacion color-noticia">{{ noticias[0].tipo }}</span>
-            <span *ngIf="noticias[0].categoria" class="badge-tipo-publicacion color-categoria">📁 {{ noticias[0].categoria }}</span>
+            <span *ngIf="noticias[0].categoria" class="badge-tipo-publicacion color-categoria"><i class="fa-solid fa-folder"></i> {{ noticias[0].categoria }}</span>
             <h3>{{ noticias[0].titulo }}</h3>
             <p>{{ noticias[0].contenido }}</p>
           </div>
@@ -79,20 +79,20 @@
             <div class="card-publicacion" *ngIf="i > 0" (click)="abrirPublicacion(item)">
               <div class="image-wrapper">
                 <img *ngIf="item.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Noticia">
-                <div *ngIf="!item.imagenUrl" class="placeholder-img">🖼️</div>
+                <div *ngIf="!item.imagenUrl" class="placeholder-img"> <i class="fa-solid fa-image"></i></div>
 
                 <div class="card-editor-overlay">
                   <button class="btn-overlay-action edit-color" (click)="$event.stopPropagation(); editarItem(item)">
-                    ✏️ Editar
+                    <i class="fa-solid fa-pen-to-square"></i> Editar
                   </button>
                   <button class="btn-overlay-action delete-color" (click)="$event.stopPropagation(); pedirConfirmacionEliminar(item)">
-                    🗑️ Eliminar
+                    <i class="fa-solid fa-trash"></i> Eliminar
                   </button>
                 </div>
               </div>
               <div class="card-info">
                 <span class="badge-tipo-publicacion color-noticia">{{ item.tipo }}</span>
-                <span *ngIf="item.categoria" class="badge-tipo-publicacion color-categoria">📁 {{ item.categoria }}</span>
+                <span *ngIf="item.categoria" class="badge-tipo-publicacion color-categoria"><i class="fa-solid fa-folder"></i> {{ item.categoria }}</span>
                 <h4>{{ item.titulo }}</h4>
                 <p class="card-summary">{{ item.contenido }}</p>
               </div>
@@ -104,7 +104,7 @@
     </div>
 
     <div *ngIf="horoscopos.length > 0" class="seccion-bloque-editorial mt-5">
-      <h2 class="editor-main-title">🔮 SECCIÓN DE HORÓSCOPOS</h2>
+      <h2 class="editor-main-title"> <i class="fa-solid fa-star-and-crescent"></i> SECCIÓN DE HORÓSCOPOS</h2>
 
       <div class="grid-horoscopos-simetrica">
         <div class="card-publicacion horoscopo-card" *ngFor="let item of horoscopos" (click)="abrirPublicacion(item)">
@@ -114,10 +114,10 @@
 
             <div class="card-editor-overlay">
               <button class="btn-overlay-action edit-color" (click)="$event.stopPropagation(); editarItem(item)">
-                ✏️ Editar
+                <i class="fa-solid fa-pen-to-square"></i> Editar
               </button>
               <button class="btn-overlay-action delete-color" (click)="$event.stopPropagation(); pedirConfirmacionEliminar(item)">
-                🗑️ Eliminar
+                <i class="fa-solid fa-trash"></i> Eliminar
               </button>
             </div>
           </div>
@@ -136,7 +136,7 @@
 <div class="modal-backdrop" *ngIf="modalFormularioAbierto">
   <div class="modal-card form-modal-layout">
     <div class="modal-form-header">
-      <h3>{{ modoEdicion ? '✏️ EDITAR ' + tipoForm : '✨ REDACTAR NUEVA PUBLICACIÓN' }}</h3>
+      <h3> <i class="fa-solid fa-rocket"></i> {{ modoEdicion ? ' EDITAR ' + tipoForm : ' REDACTAR NUEVA PUBLICACIÓN' }}</h3>
       <p class="form-subtitle">Completa los campos básicos para actualizar el sistema central</p>
     </div>
 
@@ -168,7 +168,8 @@
     <div class="modal-form-actions">
       <button class="btn-form-cancel" (click)="modalFormularioAbierto = false">Cancelar</button>
       <button class="btn-form-save" (click)="guardarPublicacion()">
-        {{ modoEdicion ? 'Actualizar Cambios' : 'Publicar Ahora 🚀' }}
+        <i class="fa-solid fa-rocket"></i>
+        {{ modoEdicion ? 'Actualizar Cambios' : 'Publicar Ahora ' }}
       </button>
     </div>
   </div>
@@ -187,7 +188,7 @@
 
 <div class="modal-backdrop" *ngIf="publicacionParaEliminar">
   <div class="modal-card confirmation-card">
-    <h3>⚠️ ¿Confirmas la eliminación?</h3>
+    <h3><i class="fa-solid fa-triangle-exclamation"></i> ¿Confirmas la eliminación?</h3>
     <p class="modal-body-text text-center">
       Estás a punto de borrar permanentemente la publicación titulada:<br>
       <strong>"{{ publicacionParaEliminar?.titulo }}"</strong>.<br>Esta acción no se puede deshacer.
