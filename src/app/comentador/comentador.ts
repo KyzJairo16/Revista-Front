@@ -51,7 +51,7 @@ export class ComentadorComponent implements OnInit {
 
         this.http.get<any[]>('http://localhost:8080/api/horoscopos/listar', opcionesHttp).subscribe({
           next: (horoscoposBack) => {
-            const horoscoposMapeados = (horoscoposBack || []).map((h: any) => ({
+            const horoscoposMapeadas = (horoscoposBack || []).map((h: any) => ({
               ...h,
               tipo: 'HOROSCOPO',
               titulo: h.signoZodiacal || h.titulo || 'Signo Desconocido',
@@ -59,18 +59,18 @@ export class ComentadorComponent implements OnInit {
               comentarios: h.comentarios || []
             }));
 
-            this.listaPublicaciones = [...noticiasMapeadas, ...horoscoposMapeados];
+            this.listaPublicaciones = [...noticiasMapeadas, ...horoscoposMapeadas];
             this.filtrarYClasificar();
           },
           error: (err) => {
-            console.error('Error al cargar horóscopos para el comentador:', err);
+            console.error('Error al cargar horóscopos:', err);
             this.listaPublicaciones = [...noticiasMapeadas];
             this.filtrarYClasificar();
           }
         });
       },
       error: (err) => {
-        console.error('Error al cargar noticias para el comentador:', err);
+        console.error('Error al cargar noticias:', err);
         this.listaPublicaciones = [];
         this.filtrarYClasificar();
       }

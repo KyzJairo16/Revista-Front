@@ -42,25 +42,25 @@
       </div>
     </div>
 
-    <div *ngIf="noticias.length === 0 && horoscopos.length === 0" class="no-results-card">
-      📭 No hay publicaciones disponibles en este momento para comentar.
+    <div *ngIf="(!noticias || noticias.length === 0) && (!horoscopos || horoscopos.length === 0)" class="no-results-card">
+      📭 No hay publicaciones disponibles en este momento para comentar o no coinciden con la búsqueda.
     </div>
 
-    <div *ngIf="noticias.length > 0 && (filtroTipo === 'TODO' || filtroTipo === 'NOTICIA')" class="seccion-bloque-editorial">
+    <div *ngIf="noticias && noticias.length > 0 && (filtroTipo.toUpperCase() === 'TODO' || filtroTipo.toUpperCase() === 'NOTICIA')" class="seccion-bloque-editorial">
       <h2 class="editor-main-title">📰 DEBATE LAS ÚLTIMAS NOTICIAS</h2>
 
       <div class="noticias-layout-complex">
 
         <div class="noticia-featured-card" (click)="abrirVisorLectura(noticias[0])">
           <div class="featured-image-wrapper">
-            <img *ngIf="noticias[0].imagenUrl" [src]="noticias[0].imagenUrl" class="img-content-fluid" alt="Noticia Principal">
-            <div *ngIf="!noticias[0].imagenUrl" class="placeholder-img-big">🖼️ Imagen no disponible</div>
+            <img *ngIf="noticias[0]?.imagenUrl" [src]="noticias[0].imagenUrl" class="img-content-fluid" alt="Noticia Principal">
+            <div *ngIf="!noticias[0]?.imagenUrl" class="placeholder-img-big">🖼️ Imagen no disponible</div>
           </div>
           <div class="featured-info">
-            <span class="badge-tipo-publicacion color-noticia">{{ noticias[0].tipo }}</span>
-            <span class="badge-comentarios-count">💬 {{ noticias[0].comentarios?.length || 0 }} comentarios</span>
-            <h3>{{ noticias[0].titulo }}</h3>
-            <p>{{ noticias[0].contenido }}</p>
+            <span class="badge-tipo-publicacion color-noticia">{{ noticias[0]?.tipo }}</span>
+            <span class="badge-comentarios-count">💬 {{ noticias[0]?.comentarios?.length || 0 }} comentarios</span>
+            <h3>{{ noticias[0]?.titulo }}</h3>
+            <p>{{ noticias[0]?.contenido }}</p>
           </div>
         </div>
 
@@ -68,14 +68,14 @@
           <ng-container *ngFor="let item of noticias; let i = index">
             <div class="card-publicacion" *ngIf="i > 0" (click)="abrirVisorLectura(item)">
               <div class="image-wrapper">
-                <img *ngIf="item.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Noticia">
-                <div *ngIf="!item.imagenUrl" class="placeholder-img">🖼️</div>
+                <img *ngIf="item?.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Noticia">
+                <div *ngIf="!item?.imagenUrl" class="placeholder-img">🖼️</div>
               </div>
               <div class="card-info">
-                <span class="badge-tipo-publicacion color-noticia">{{ item.tipo }}</span>
-                <span class="badge-comentarios-count">💬 {{ item.comentarios?.length || 0 }}</span>
-                <h4>{{ item.titulo }}</h4>
-                <p class="card-summary">{{ item.contenido }}</p>
+                <span class="badge-tipo-publicacion color-noticia">{{ item?.tipo }}</span>
+                <span class="badge-comentarios-count">💬 {{ item?.comentarios?.length || 0 }}</span>
+                <h4>{{ item?.titulo }}</h4>
+                <p class="card-summary">{{ item?.contenido }}</p>
               </div>
             </div>
           </ng-container>
@@ -84,20 +84,20 @@
       </div>
     </div>
 
-    <div *ngIf="horoscopos.length > 0 && (filtroTipo === 'TODO' || filtroTipo === 'HOROSCOPO')" class="seccion-bloque-editorial mt-5">
+    <div *ngIf="horoscopos && horoscopos.length > 0 && (filtroTipo.toUpperCase() === 'TODO' || filtroTipo.toUpperCase() === 'HOROSCOPO')" class="seccion-bloque-editorial mt-5">
       <h2 class="editor-main-title">🔮 OPINA SOBRE LA SECCIÓN ASTRAL</h2>
 
       <div class="grid-horoscopos-simetrica">
         <div class="card-publicacion horoscopo-card" *ngFor="let item of horoscopos" (click)="abrirVisorLectura(item)">
           <div class="image-wrapper">
-            <img *ngIf="item.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Signo">
-            <div *ngIf="!item.imagenUrl" class="placeholder-img">✨</div>
+            <img *ngIf="item?.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Signo">
+            <div *ngIf="!item?.imagenUrl" class="placeholder-img">✨</div>
           </div>
           <div class="card-info">
-            <span class="badge-tipo-publicacion color-horoscopo">{{ item.tipo }}</span>
-            <span class="badge-comentarios-count">💬 {{ item.comentarios?.length || 0 }}</span>
-            <h4>{{ item.titulo }}</h4>
-            <p class="card-summary text-center-zodiac">{{ item.contenido }}</p>
+            <span class="badge-tipo-publicacion color-horoscopo">{{ item?.tipo }}</span>
+            <span class="badge-comentarios-count">💬 {{ item?.comentarios?.length || 0 }}</span>
+            <h4>{{ item?.titulo }}</h4>
+            <p class="card-summary text-center-zodiac">{{ item?.contenido }}</p>
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@
 
     <div class="modal-form-header">
       <h3>{{ publicacionSeleccionada?.titulo }}</h3>
-      <span class="badge-tipo-publicacion" [ngClass]="publicacionSeleccionada?.tipo === 'NOTICIA' ? 'color-noticia' : 'color-horoscopo'">
+      <span class="badge-tipo-publicacion" [ngClass]="publicacionSeleccionada?.tipo?.toUpperCase() === 'NOTICIA' ? 'color-noticia' : 'color-horoscopo'">
         {{ publicacionSeleccionada?.tipo }}
       </span>
     </div>

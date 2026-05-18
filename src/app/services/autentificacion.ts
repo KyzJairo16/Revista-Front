@@ -9,15 +9,10 @@ import { HttpClient } from '@angular/common/http';
 export class AutentificacionService {
   private http = inject(HttpClient);
 
-  // Endpoint de autenticación sincronizado con tu AuthController de Spring Boot
   private URL_API = 'http://localhost:8080/api/auth';
 
   public arrancarEnRegistro: boolean = false;
 
-  /**
-   * Envía las credenciales reales a Spring Boot.
-   * Guarda el token, el rol unificado y el nombre de usuario ingresado.
-   */
   login(credenciales: any): Observable<any> {
     return this.http.post<any>(`${this.URL_API}/login`, credenciales).pipe(
       tap(respuesta => {
@@ -42,17 +37,10 @@ export class AutentificacionService {
     );
   }
 
-  /**
-   * Envía una solicitud de registro al endpoint de tu AuthController
-   */
   registrar(datosRegistro: any): Observable<any> {
     return this.http.post(`${this.URL_API}/register`, datosRegistro, { responseType: 'text' });
   }
 
-  /**
-   * Extrae y decodifica el Rol guardado dentro del Token JWT o del localStorage,
-   * garantizando consistencia limpia de texto.
-   */
   getRol(): string {
     const token = localStorage.getItem('token_revista');
     let rolDetectado = '';
@@ -83,9 +71,6 @@ export class AutentificacionService {
     return rolDetectado;
   }
 
-  /**
-   * Retorna las cabeceras HTTP necesarias para las peticiones protegidas de Spring Boot
-   */
   getHeaders() {
     const token = localStorage.getItem('token_revista');
     return {
@@ -96,9 +81,7 @@ export class AutentificacionService {
     };
   }
 
-  /**
-   * Obtiene el nombre real guardado dinámicamente en el login
-   */
+
   getUsuario(): string {
     return localStorage.getItem('nombre_usuario') || '';
   }
@@ -106,10 +89,6 @@ export class AutentificacionService {
   estaAutenticado(): boolean {
     return localStorage.getItem('token_revista') !== null;
   }
-
-  /**
-   * Destrucción absoluta de credenciales y datos de sesión locales
-   */
   logout(): void {
     localStorage.removeItem('token_revista');
     localStorage.removeItem('rol_revista');

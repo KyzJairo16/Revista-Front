@@ -50,7 +50,7 @@
 }
 
 .role-pill.color-comentador {
-  background-color: #1aa39a;
+  background-color: #4f347e;
   color: #ffffff;
   padding: 3px 10px;
   border-radius: 4px;
@@ -72,8 +72,8 @@
 }
 
 .btn-logout-retro:hover {
-  background-color: #dc2626;
-  border-color: #ef4444;
+  background-color: #4f347e;
+  border-color: #bb9cef;
   color: white;
 }
 
@@ -88,8 +88,8 @@
   justify-content: space-between;
   align-items: center;
   background: #f0fdfa;
-  border: 1px solid #99f6e4;
-  color: #115e59;
+  border: 1px solid #4f347e;
+  color: #4f347e;
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
   margin-bottom: 2rem;
@@ -256,12 +256,12 @@
   border-radius: 4px;
   text-transform: uppercase;
 }
-.color-noticia { background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+.color-noticia { background-color: #eff6ff; color: #8567ba; border: 1px solid #bb9cef; }
 .color-horoscopo { background-color: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
 
 .badge-comentarios-count {
   background: #f1f5f9;
-  color: #475569;
+  color: #4f347e;
   font-size: 0.72rem;
   padding: 2px 8px;
   border-radius: 9999px;
@@ -298,7 +298,7 @@
 }
 .select-filter { cursor: pointer; }
 .input-search:focus, .select-filter:focus {
-  border-color: #1aa39a;
+  border-color: #4f347e;
 }
 
 .no-results-card {
@@ -382,7 +382,7 @@
 
 .comments-section-container h4 {
   font-size: 0.98rem;
-  color: #1e293b;
+  color: #281747;
   margin-top: 0;
   margin-bottom: 12px;
   font-weight: 700;
@@ -402,7 +402,7 @@
   background: #ffffff;
   padding: 10px 14px;
   border-radius: 8px;
-  border-left: 4px solid #1aa39a;
+  border-left: 4px solid #4f347e;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 
