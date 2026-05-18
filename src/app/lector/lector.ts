@@ -1,12 +1,17 @@
+<<<<<<< Updated upstream
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AutentificacionService } from '../services/autentificacion';
+=======
+import { Component } from '@angular/core';
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-lector',
   standalone: false,
   templateUrl: './lector.html',
+<<<<<<< Updated upstream
   styleUrls: ['./lector.css']
 })
 export class LectorComponent implements OnInit {
@@ -98,3 +103,8 @@ export class LectorComponent implements OnInit {
     this.router.navigate(['/']);
   }
 }
+=======
+  styleUrl: './lector.css',
+})
+export class Lector {}
+>>>>>>> Stashed changes
