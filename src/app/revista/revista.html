@@ -1,0 +1,44 @@
+<div class="main-fullscreen-wrapper">
+  <div class="access-container">
+
+    <div class="brand-column">
+      <div class="brand-overlay">
+        <div class="brand-text-group">
+          <span class="big-brand-logo">NextGen</span>
+          <h1 class="brand-slogan">Mantente al día y al futuro</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="forms-column">
+      <div class="form-card">
+
+        <div class="form-section">
+          <h2>INICIAR SESIÓN</h2>
+
+          <div class="input-group">
+            <span class="icon">👤</span>
+            <input type="text" [(ngModel)]="usuarioInput" placeholder="  Nombre">
+          </div>
+
+          <div class="input-group">
+            <span class="icon">🔒</span>
+            <input type="password" [(ngModel)]="contraseniaInput" placeholder="  Contraseña">
+          </div>
+
+          <button class="btn-submit btn-pink" (click)="ejecutarLogin()">Iniciar Sesión</button>
+        </div>
+
+        <div class="form-section mt-4">
+          <h2>REGISTRARSE</h2>
+          <button class="btn-submit btn-black" (click)="irAlRegistro()">Crear Cuenta</button>
+          <p class="register-info">
+            Crea una cuenta para acceder a contenidos exclusivos, comentar y personalizar tu experiencia.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

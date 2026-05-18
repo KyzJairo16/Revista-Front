@@ -1,0 +1,166 @@
+<div class="workspace-admin animate-fade">
+
+  <nav class="navbar-interno-admin">
+    <div class="brand-logo-container">
+      <img src="logo.png" alt="NextGen Digital Logo" class="logo-imagen-subida">
+    </div>
+
+    <div class="user-status-ribbon">
+      <span class="user-badge">👤 {{ nombreUsuarioLogueado }}</span>
+      <span class="role-pill-admin">ADMINISTRADOR</span>
+      <button class="btn-logout-retro" (click)="cerrarSesionAdmin()">Cerrar Sesión 🚪</button>
+    </div>
+  </nav>
+
+  <div class="admin-content-layout">
+
+    <div class="stats-grid-container">
+      <div class="stat-card color-blue">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info-block">
+          <span class="stat-number">{{ listaUsuarios.length }}</span>
+          <span class="stat-label">Usuarios Totales</span>
+        </div>
+      </div>
+      <div class="stat-card color-purple">
+        <div class="stat-icon">✏️</div>
+        <div class="stat-info-block">
+          <span class="stat-number">{{ contarPorRol('EDITOR') }}</span>
+          <span class="stat-label">Editores Activos</span>
+        </div>
+      </div>
+      <div class="stat-card color-gold">
+        <div class="stat-icon">👑</div>
+        <div class="stat-info-block">
+          <span class="stat-number">{{ contarPorRol('ADMINISTRADOR') }}</span>
+          <span class="stat-label">Administradores</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-control-ribbon">
+      <span class="ribbon-title">🛠️ Panel de Control: Administración General de Usuarios y Roles</span>
+      <button class="btn-add-user" (click)="abrirModalCrear()">➕ REGISTRAR NUEVO USUARIO</button>
+    </div>
+
+    <div class="filter-search-container">
+      <div class="filter-field">
+        <span class="filter-icon">🔍</span>
+        <input
+          type="text"
+          placeholder="Buscar usuario por nombre..."
+          [(ngModel)]="busquedaTexto"
+          (ngModelChange)="filtrarUsuarios()"
+          class="input-search">
+      </div>
+
+      <div class="filter-field drop-field">
+        <span class="filter-icon">🛡️</span>
+        <select
+          [(ngModel)]="filtroRol"
+          (ngModelChange)="filtrarUsuarios()"
+          class="select-filter">
+          <option value="TODO">Rol: Todos los usuarios</option>
+          <option value="ADMINISTRADOR">Administradores</option>
+          <option value="EDITOR">Editores</option>
+          <option value="SUSCRIPTOR">Suscriptores</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="usuariosFiltrados.length === 0" class="no-results-card">
+      📭 No se encontraron usuarios que coincidan con la búsqueda en la base de datos.
+    </div>
+
+    <div class="table-responsive-container" *ngIf="usuariosFiltrados.length > 0">
+      <table class="admin-users-table">
+        <thead>
+        <tr>
+          <th>ID Sistema</th>
+          <th>Nombre de Usuario</th>
+          <th>Rol Asignado</th>
+          <th class="text-center-actions">Acciones Operativas</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let usuario of usuariosFiltrados" class="row-usuario-item">
+          <td><span class="id-badge">#{{ usuario.id }}</span></td>
+          <td><strong>{{ usuario.usuario }}</strong></td>
+          <td>
+              <span class="badge-rol-tipo" [ngClass]="{
+                'rol-admin': usuario.rol === 'ADMINISTRADOR',
+                'rol-editor': usuario.rol === 'EDITOR',
+                'rol-suscriptor': usuario.rol === 'SUSCRIPTOR'
+              }">
+                {{ usuario.rol }}
+              </span>
+          </td>
+          <td class="text-center-actions">
+            <div class="action-buttons-group">
+              <button class="btn-action-table edit-btn" (click)="editarUsuario(usuario)">✏️ Editar</button>
+              <button class="btn-action-table delete-btn" (click)="pedirConfirmacionEliminar(usuario)">🗑️ Eliminar</button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="modalFormularioAbierto">
+  <div class="modal-card form-modal-layout">
+    <div class="modal-form-header">
+      <h3>{{ modoEdicion ? '✏️ EDITAR PERFIL DE USUARIO' : '✨ REGISTRAR NUEVO USUARIO' }}</h3>
+      <p class="form-subtitle">Configura las credenciales y accesos directos al backend central</p>
+    </div>
+
+    <div class="modal-form-body">
+      <div class="form-group-field">
+        <label>Nombre de Usuario (Login Username)</label>
+        <input
+          type="text"
+          [(ngModel)]="usuarioForm"
+          placeholder="Ej: juan_perez"
+          [disabled]="modoEdicion">
+      </div>
+
+      <div class="form-group-field">
+        <label>{{ modoEdicion ? 'Nueva Contraseña (Dejar en blanco para conservar)' : 'Contraseña de Acceso' }}</label>
+        <input type="password" [(ngModel)]="contrasenaForm" placeholder="••••••••">
+      </div>
+
+      <div class="form-group-field">
+        <label>Rol de Acceso en el Sistema</label>
+        <select [(ngModel)]="rolForm">
+          <option value="SUSCRIPTOR">Suscriptor (Lector)</option>
+          <option value="EDITOR">Editor (Creador de Contenido)</option>
+          <option value="ADMINISTRADOR">Administrador (Gestión total)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-form-actions">
+      <button class="btn-form-cancel" (click)="modalFormularioAbierto = false">Cancelar</button>
+      <button class="btn-form-save" (click)="guardarUsuario()">
+        {{ modoEdicion ? 'Actualizar Usuario' : 'Crear Cuenta 🚀' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="usuarioParaEliminar">
+  <div class="modal-card confirmation-card">
+    <h3>⚠️ ¿Confirmas la eliminación de la cuenta?</h3>
+    <p class="modal-body-text text-center">
+      Estás a punto de borrar permanentemente al usuario:<br>
+      <strong>"{{ usuarioParaEliminar.usuario }}"</strong> con rol <strong>{{ usuarioParaEliminar.rol }}</strong>.<br>
+      Esta acción lo removerá por completo del sistema.
+    </p>
+    <div class="modal-form-actions mt-4">
+      <button class="btn-form-cancel" (click)="usuarioParaEliminar = null">Cancelar</button>
+      <button class="btn-action-table delete-btn px-4" (click)="confirmarBorradoBackend()">Eliminar de la BD</button>
+    </div>
+  </div>
+</div>
