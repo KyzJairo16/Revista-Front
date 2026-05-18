@@ -6,9 +6,9 @@
     </div>
 
     <div class="user-status-ribbon">
-      <span class="user-badge">👤 {{ nombreUsuarioLogueado }}</span>
+      <span class="user-badge"> <i class="fa-solid fa-user"></i>{{ nombreUsuarioLogueado }} </span>
       <span class="role-pill-admin">ADMINISTRATIVO</span>
-      <button class="btn-logout-retro" (click)="cerrarSesionAdmin()">Cerrar Sesión 🚪</button>
+      <button class="btn-logout-retro" (click)="cerrarSesionAdmin()">Cerrar Sesión <i class="fa-solid fa-right-from-bracket"></i></button>
     </div>
   </nav>
 
@@ -16,35 +16,35 @@
 
     <div class="stats-grid-container">
       <div class="stat-card color-blue">
-        <div class="stat-icon">👥</div>
+        <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
         <div class="stat-info-block">
           <span class="stat-number">{{ listaUsuarios.length }}</span>
           <span class="stat-label">Usuarios Totales</span>
         </div>
       </div>
       <div class="stat-card color-purple">
-        <div class="stat-icon">✏️</div>
+        <div class="stat-icon"><i class="fa-solid fa-pen"></i></div>
         <div class="stat-info-block">
           <span class="stat-number">{{ contarPorRol('EDITOR') }}</span>
           <span class="stat-label">Editores Activos</span>
         </div>
       </div>
       <div class="stat-card color-blue">
-        <div class="stat-icon">💬</div>
+        <div class="stat-icon"><i class="fa-solid fa-comments"></i></div>
         <div class="stat-info-block">
           <span class="stat-number">{{ contarPorRol('COMENTADOR') }}</span>
           <span class="stat-label">Comentadores</span>
         </div>
       </div>
       <div class="stat-card color-purple">
-        <div class="stat-icon">📖</div>
+        <div class="stat-icon"><i class="fa-solid fa-book"></i></div>
         <div class="stat-info-block">
           <span class="stat-number">{{ contarPorRol('USUARIO') }}</span>
           <span class="stat-label">Usuarios Generales</span>
         </div>
       </div>
       <div class="stat-card color-gold">
-        <div class="stat-icon">👑</div>
+        <div class="stat-icon"><i class="fa-solid fa-crown"></i></div>
         <div class="stat-info-block">
           <span class="stat-number">{{ contarPorRol('ADMINISTRATIVO') }}</span>
           <span class="stat-label">Administrativos</span>
@@ -53,13 +53,13 @@
     </div>
 
     <div class="admin-control-ribbon">
-      <span class="ribbon-title">🛠️ Panel de Control: Administración General de Usuarios y Roles</span>
-      <button class="btn-add-user" (click)="abrirModalCrear()">➕ REGISTRAR NUEVO USUARIO</button>
+      <span class="ribbon-title"><i class="fa-solid fa-screwdriver-wrench"></i> Panel de Control: Administración General de Usuarios y Roles</span>
+      <button class="btn-add-user" (click)="abrirModalCrear()"><i class="fa-solid fa-user-plus"></i> REGISTRAR NUEVO USUARIO</button>
     </div>
 
     <div class="filter-search-container">
       <div class="filter-field">
-        <span class="filter-icon">🔍</span>
+        <span class="filter-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
         <input
           type="text"
           placeholder="Buscar usuario por nombre..."
@@ -69,7 +69,7 @@
       </div>
 
       <div class="filter-field drop-field">
-        <span class="filter-icon">🛡️</span>
+        <span class="filter-icon"><i class="fa-solid fa-shield-halved"></i></span>
         <select
           [(ngModel)]="filtroRol"
           (ngModelChange)="filtrarUsuarios()"
@@ -84,7 +84,7 @@
     </div>
 
     <div *ngIf="usuariosFiltrados.length === 0" class="no-results-card">
-      📭 No se encontraron usuarios que coincidan con la búsqueda en la base de datos.
+      <i class="fa-solid fa-inbox"></i> No se encontraron usuarios que coincidan con la búsqueda en la base de datos.
     </div>
 
     <div class="table-responsive-container" *ngIf="usuariosFiltrados.length > 0">
@@ -113,8 +113,8 @@
           </td>
           <td class="text-center-actions">
             <div class="action-buttons-group">
-              <button class="btn-action-table edit-btn" (click)="editarUsuario(usuario)">✏️ Editar</button>
-              <button class="btn-action-table delete-btn" (click)="pedirConfirmacionEliminar(usuario)">🗑️ Eliminar</button>
+              <button class="btn-action-table edit-btn" (click)="editarUsuario(usuario)"> <i class="fa-solid fa-pen-to-square"></i> Editar</button>
+              <button class="btn-action-table delete-btn" (click)="pedirConfirmacionEliminar(usuario)"><i class="fa-solid fa-trash"></i> Eliminar</button>
             </div>
           </td>
         </tr>
@@ -128,7 +128,7 @@
 <div class="modal-backdrop" *ngIf="modalFormularioAbierto">
   <div class="modal-card form-modal-layout">
     <div class="modal-form-header">
-      <h3>{{ modoEdicion ? '✏️ EDITAR PERFIL DE USUARIO' : '✨ REGISTRAR NUEVO USUARIO' }}</h3>
+      <h3> <i class="fa-solid fa-user-pen"></i> {{ modoEdicion ? ' EDITAR PERFIL DE USUARIO' : ' REGISTRAR NUEVO USUARIO' }}</h3>
       <p class="form-subtitle">Configura las credenciales y accesos directos al backend central</p>
     </div>
 
@@ -163,7 +163,7 @@
     <div class="modal-form-actions">
       <button class="btn-form-cancel" (click)="modalFormularioAbierto = false">Cancelar</button>
       <button class="btn-form-save" (click)="guardarUsuario()">
-        {{ modoEdicion ? 'Actualizar Usuario' : 'Crear Cuenta 🚀' }}
+        <i class="fa-solid fa-user-pen"></i> {{ modoEdicion ? 'Actualizar Usuario' : 'Crear Cuenta ' }}
       </button>
     </div>
   </div>
@@ -171,7 +171,7 @@
 
 <div class="modal-backdrop" *ngIf="usuarioParaEliminar">
   <div class="modal-card confirmation-card">
-    <h3>⚠️ ¿Confirmas la eliminación de la cuenta?</h3>
+    <h3><i class="fa-solid fa-triangle-exclamation"></i> ¿Confirmas la eliminación de la cuenta?</h3>
     <p class="modal-body-text text-center">
       Estás a punto de borrar permanentemente al usuario:<br>
       <strong>"{{ usuarioParaEliminar.username }}"</strong> con rol <strong>{{ usuarioParaEliminar.rol }}</strong>.<br>
