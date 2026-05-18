@@ -1,8 +1,8 @@
-/* Contenedor total de la pantalla de Registro */
+
 .register-fullscreen-container {
   width: 100%;
   min-height: 100vh;
-  background-color: #e2ded9; /* Fondo claro texturizado idéntico a tu captura */
+  background-color: #e2ded9;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +21,6 @@
   background-size: 6px 6px, 4px 4px, 3px 3px, 5px 5px !important;
 }
 
-/* Botón superior izquierdo cromado/metálico */
 .btn-back-magazine {
   position: absolute;
   top: 30px;
@@ -44,7 +43,6 @@
   filter: brightness(1.05);
 }
 
-/* Tarjeta centrada con degradado morado/rosa */
 .form-card-centered {
   width: 100%;
   max-width: 540px;
@@ -56,7 +54,6 @@
   box-sizing: border-box;
 }
 
-/* Encabezado y barra de progreso circular */
 .form-header {
   text-align: center;
   margin-bottom: 25px;
@@ -105,7 +102,6 @@
   box-shadow: 0 0 8px #050505;
 }
 
-/* Cajas de texto (Inputs) oscuras y redondeadas */
 .input-group {
   position: relative;
   margin-bottom: 12px;
@@ -137,7 +133,6 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* Grupo selector de Roles (Estilo chips de la captura) */
 .role-selection-group {
   margin-top: 20px;
   margin-bottom: 15px;
@@ -161,7 +156,7 @@
 }
 
 .chip-option input[type="radio"] {
-  display: none; /* Escondemos el radio nativo redondo */
+  display: none;
 }
 
 .chip-option span {
@@ -175,21 +170,18 @@
   border: 2px solid transparent;
 }
 
-/* Colores personalizados de cada Chip basado en tu maqueta */
 .administrativo span { background-color: #bb9cef; }
 .editor span { background-color: #bb9cef; }
 .comentador span { background-color: #bb9cef; }
 .usuario span { background-color: #bb9cef; }
 .sin-autenticar span { background-color: #bb9cef; }
 
-/* Efecto visual cuando seleccionan un chip de rol */
 .chip-option input[type="radio"]:checked + span {
   border-color: #ffffff;
   transform: scale(1.05);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Textos informativos inferiores */
 .role-info-text {
   font-size: 12px;
   line-height: 1.4;
@@ -211,7 +203,6 @@
   cursor: pointer;
 }
 
-/* Botón grande de someter Verde */
 .btn-submit {
   width: 100%;
   padding: 14px;
@@ -235,7 +226,6 @@
   background-color: #bb9cef;
 }
 
-/* Sección inferior para regresar al Login de la revista */
 .switch-auth-mode {
   display: flex;
   align-items: center;

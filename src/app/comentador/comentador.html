@@ -1,0 +1,159 @@
+<div class="workspace-comentador animate-fade">
+
+  <nav class="navbar-interno-editor">
+    <div class="brand-logo-container">
+      <img src="logo.png" alt="NextGen Digital Logo" class="logo-imagen-subida">
+    </div>
+
+    <div class="user-status-ribbon">
+      <span class="user-badge">👤 {{ nombreUsuarioLogueado }}</span>
+      <span class="role-pill color-comentador">COMENTADOR</span>
+      <button class="btn-logout-retro" (click)="cerrarSesion()">Cerrar Sesión 🚪</button>
+    </div>
+  </nav>
+
+  <div class="magazine-content-layout">
+
+    <div class="editor-control-ribbon">
+      <span class="ribbon-title">💬 Panel Interactivos: Explora el contenido oficial y deja tus opiniones o debates.</span>
+    </div>
+
+    <div class="filter-search-container">
+      <div class="filter-field">
+        <span class="filter-icon">🔍</span>
+        <input
+          type="text"
+          placeholder="Buscar publicaciones para debatir..."
+          [(ngModel)]="busquedaTexto"
+          (ngModelChange)="filtrarYClasificar()"
+          class="input-search">
+      </div>
+
+      <div class="filter-field drop-field">
+        <span class="filter-icon">📁</span>
+        <select
+          [(ngModel)]="filtroTipo"
+          (ngModelChange)="filtrarYClasificar()"
+          class="select-filter">
+          <option value="TODO">Mostrar: Todo el contenido</option>
+          <option value="NOTICIA">Solo Noticias</option>
+          <option value="HOROSCOPO">Solo Horóscopos</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="noticias.length === 0 && horoscopos.length === 0" class="no-results-card">
+      📭 No hay publicaciones disponibles en este momento para comentar.
+    </div>
+
+    <div *ngIf="noticias.length > 0 && (filtroTipo === 'TODO' || filtroTipo === 'NOTICIA')" class="seccion-bloque-editorial">
+      <h2 class="editor-main-title">📰 DEBATE LAS ÚLTIMAS NOTICIAS</h2>
+
+      <div class="noticias-layout-complex">
+
+        <div class="noticia-featured-card" (click)="abrirVisorLectura(noticias[0])">
+          <div class="featured-image-wrapper">
+            <img *ngIf="noticias[0].imagenUrl" [src]="noticias[0].imagenUrl" class="img-content-fluid" alt="Noticia Principal">
+            <div *ngIf="!noticias[0].imagenUrl" class="placeholder-img-big">🖼️ Imagen no disponible</div>
+          </div>
+          <div class="featured-info">
+            <span class="badge-tipo-publicacion color-noticia">{{ noticias[0].tipo }}</span>
+            <span class="badge-comentarios-count">💬 {{ noticias[0].comentarios?.length || 0 }} comentarios</span>
+            <h3>{{ noticias[0].titulo }}</h3>
+            <p>{{ noticias[0].contenido }}</p>
+          </div>
+        </div>
+
+        <div class="noticias-secondary-grid">
+          <ng-container *ngFor="let item of noticias; let i = index">
+            <div class="card-publicacion" *ngIf="i > 0" (click)="abrirVisorLectura(item)">
+              <div class="image-wrapper">
+                <img *ngIf="item.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Noticia">
+                <div *ngIf="!item.imagenUrl" class="placeholder-img">🖼️</div>
+              </div>
+              <div class="card-info">
+                <span class="badge-tipo-publicacion color-noticia">{{ item.tipo }}</span>
+                <span class="badge-comentarios-count">💬 {{ item.comentarios?.length || 0 }}</span>
+                <h4>{{ item.titulo }}</h4>
+                <p class="card-summary">{{ item.contenido }}</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="horoscopos.length > 0 && (filtroTipo === 'TODO' || filtroTipo === 'HOROSCOPO')" class="seccion-bloque-editorial mt-5">
+      <h2 class="editor-main-title">🔮 OPINA SOBRE LA SECCIÓN ASTRAL</h2>
+
+      <div class="grid-horoscopos-simetrica">
+        <div class="card-publicacion horoscopo-card" *ngFor="let item of horoscopos" (click)="abrirVisorLectura(item)">
+          <div class="image-wrapper">
+            <img *ngIf="item.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Signo">
+            <div *ngIf="!item.imagenUrl" class="placeholder-img">✨</div>
+          </div>
+          <div class="card-info">
+            <span class="badge-tipo-publicacion color-horoscopo">{{ item.tipo }}</span>
+            <span class="badge-comentarios-count">💬 {{ item.comentarios?.length || 0 }}</span>
+            <h4>{{ item.titulo }}</h4>
+            <p class="card-summary text-center-zodiac">{{ item.contenido }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="publicacionSeleccionada">
+  <div class="modal-card form-modal-layout animate-scaleUp">
+
+    <div class="modal-form-header">
+      <h3>{{ publicacionSeleccionada?.titulo }}</h3>
+      <span class="badge-tipo-publicacion" [ngClass]="publicacionSeleccionada?.tipo === 'NOTICIA' ? 'color-noticia' : 'color-horoscopo'">
+        {{ publicacionSeleccionada?.tipo }}
+      </span>
+    </div>
+
+    <div class="modal-form-body">
+      <div class="lectura-completa-container">
+        <img *ngIf="publicacionSeleccionada?.imagenUrl" [src]="publicacionSeleccionada?.imagenUrl" class="img-modal-fluid mb-3">
+        <p class="modal-body-text">{{ publicacionSeleccionada?.contenido }}</p>
+      </div>
+
+      <hr class="separator-line">
+
+      <div class="comments-section-container">
+        <h4>💬 Hilo de Discusión ({{ publicacionSeleccionada?.comentarios?.length || 0 }})</h4>
+
+        <div class="comments-list-flow" *ngIf="publicacionSeleccionada?.comentarios?.length > 0">
+          <div *ngFor="let comentario of publicacionSeleccionada.comentarios" class="single-comment-bubble">
+            <p>{{ comentario }}</p>
+          </div>
+        </div>
+
+        <div class="comment-empty-state" *ngIf="!publicacionSeleccionada?.comentarios || publicacionSeleccionada.comentarios.length === 0">
+          🌱 Aún no hay opiniones. ¡Sé el primero en iniciar el debate!
+        </div>
+
+        <div class="comment-write-box mt-3">
+          <label class="comment-input-label">Escribe tu opinión abierta:</label>
+          <div class="comment-input-action-row">
+            <textarea
+              rows="2"
+              [(ngModel)]="nuevoComentarioTexto"
+              placeholder="Escribe un comentario respetuoso y crítico..."
+              class="textarea-comment"></textarea>
+            <button class="btn-send-comment" (click)="agregarComentario()">Enviar 🚀</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-form-actions">
+      <button class="btn-form-cancel" style="width: 100%;" (click)="publicacionSeleccionada = null">Salir del Visor de Lectura</button>
+    </div>
+
+  </div>
+</div>

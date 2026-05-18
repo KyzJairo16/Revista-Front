@@ -16,10 +16,6 @@ export class RevistaComponent {
   usuarioInput: string = '';
   contraseniaInput: string = '';
 
-  /**
-   * Captura las credenciales de acceso, valida con el AuthController de Spring Boot
-   * y despacha inmediatamente al usuario a su panel correspondiente de forma segura.
-   */
   ejecutarLogin(): void {
     if (!this.usuarioInput.trim() || !this.contraseniaInput.trim()) {
       alert('Por favor rellena todos los campos del inicio de sesión.');
@@ -38,7 +34,6 @@ export class RevistaComponent {
 
         alert(`¡Conexión Exitosa con Spring Boot!\nBienvenido. Rol activo: ${rolDetectado}`);
 
-        // Forzamos a Angular a procesar la redirección en la zona principal
         this.zone.run(() => {
           switch (rolDetectado) {
             case 'EDITOR':
@@ -54,12 +49,12 @@ export class RevistaComponent {
               this.router.navigate(['/comentador']);
               break;
 
-            case 'USUARIO': // <-- Este es tu rol de Lector del backend
-              this.router.navigate(['/lector']); // <-- Despachado directo a su nueva interfaz limpia
+            case 'USUARIO':
+              this.router.navigate(['/lector']);
               break;
 
             default:
-              this.router.navigate(['/']); // Fallback a la raíz en caso de cualquier otra inconsistencia
+              this.router.navigate(['/']);
               break;
           }
         });
