@@ -21,7 +21,6 @@
   background-size: 6px 6px, 4px 4px, 3px 3px, 5px 5px !important;
 }
 
-
 .btn-back-magazine {
   position: absolute;
   top: 30px;
@@ -44,7 +43,6 @@
   filter: brightness(1.05);
 }
 
-
 .form-card-centered {
   width: 100%;
   max-width: 540px;
@@ -55,7 +53,6 @@
   color: #050505;
   box-sizing: border-box;
 }
-
 
 .form-header {
   text-align: center;
@@ -105,7 +102,6 @@
   box-shadow: 0 0 8px #050505;
 }
 
-
 .input-group {
   position: relative;
   margin-bottom: 12px;
@@ -136,7 +132,6 @@
 .input-group input::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
-
 
 .role-selection-group {
   margin-top: 20px;
@@ -175,20 +170,17 @@
   border: 2px solid transparent;
 }
 
-
 .administrativo span { background-color: #bb9cef; }
 .editor span { background-color: #bb9cef; }
 .comentador span { background-color: #bb9cef; }
 .usuario span { background-color: #bb9cef; }
 .sin-autenticar span { background-color: #bb9cef; }
 
-
 .chip-option input[type="radio"]:checked + span {
   border-color: #ffffff;
   transform: scale(1.05);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
-
 
 .role-info-text {
   font-size: 12px;
@@ -210,7 +202,6 @@
   text-decoration: underline;
   cursor: pointer;
 }
-
 
 .btn-submit {
   width: 100%;
@@ -234,7 +225,6 @@
 .btn-green:hover {
   background-color: #bb9cef;
 }
-
 
 .switch-auth-mode {
   display: flex;

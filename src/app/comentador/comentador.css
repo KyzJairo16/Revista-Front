@@ -3,7 +3,6 @@
   display: block;
   min-height: 100vh;
   background-color: #f6f0e8 !important;
-
   background-image:
     linear-gradient(90deg, rgba(255,255,255,0.03) 50%, transparent 50%),
     linear-gradient(rgba(0,0,0,0.02) 50%, transparent 50%),
@@ -50,7 +49,16 @@
   color: #f5f5f7;
 }
 
-/* Botón Retro de Salida Seguro */
+.role-pill.color-comentador {
+  background-color: #4f347e;
+  color: #ffffff;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
 .btn-logout-retro {
   background-color: #262626;
   color: #f3f4f6;
@@ -64,25 +72,23 @@
 }
 
 .btn-logout-retro:hover {
-  background-color: #dc2626;
-  border-color: #ef4444;
+  background-color: #4f347e;
+  border-color: #bb9cef;
   color: white;
 }
 
-/* Layout General del Contenido */
 .magazine-content-layout {
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-/* Cintillo superior de bienvenida */
 .editor-control-ribbon {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff5f5;
-  border: 1px solid #bb9cef;
+  background: #f0fdfa;
+  border: 1px solid #4f347e;
   color: #4f347e;
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
@@ -96,7 +102,6 @@
   letter-spacing: 0.3px;
 }
 
-/* Títulos de Categorías */
 .editor-main-title {
   color: #111111;
   font-size: 1.3rem;
@@ -106,10 +111,6 @@
   padding-bottom: 0.5rem;
   margin-top: 1rem;
 }
-
-/* ==========================================================================
-   MALLA EDITORIAL DE NOTICIAS (Distribución Asimétrica Limpia)
-   ========================================================================== */
 .noticias-layout-complex {
   display: grid;
   grid-template-columns: 42% 1fr;
@@ -117,7 +118,6 @@
   margin-top: 1.5rem;
 }
 
-/* Tarjeta Destacada del Lector (Efecto zoom suave al pasar el mouse) */
 .noticia-featured-card {
   background: white;
   border: 1px solid #e2dbd0;
@@ -175,16 +175,12 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .noticias-secondary-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
-/* ==========================================================================
-   TARJETAS SECUNDARIAS Y MALLA DE HORÓSCOPOS
-   ========================================================================== */
 .grid-horoscopos-simetrica {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -253,7 +249,6 @@
   text-align: center;
 }
 
-/* Badges Temáticos */
 .badge-tipo-publicacion {
   font-size: 0.65rem;
   font-weight: bold;
@@ -261,13 +256,21 @@
   border-radius: 4px;
   text-transform: uppercase;
 }
-.color-noticia { background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
-.color-categoria { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; margin-left: 4px; }
+.color-noticia { background-color: #eff6ff; color: #8567ba; border: 1px solid #bb9cef; }
 .color-horoscopo { background-color: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
 
-/* ==========================================================================
-   BARRA DE BUSQUEDA Y FILTROS INTEGRADOS
-   ========================================================================== */
+.badge-comentarios-count {
+  background: #f1f5f9;
+  color: #4f347e;
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-weight: 600;
+  margin-left: 6px;
+  border: 1px solid #e2e8f0;
+  display: inline-block;
+}
+
 .filter-search-container {
   display: flex;
   gap: 1rem;
@@ -307,9 +310,6 @@
   color: #666;
 }
 
-/* ==========================================================================
-   MODAL: VISOR DE LECTURA INMERSIVA (Exclusivo para el Lector)
-   ========================================================================== */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -324,56 +324,176 @@
   z-index: 9999;
 }
 
-.modal-card {
+.modal-card.form-modal-layout {
   background: white;
   border: 1px solid #e2dbd0;
-  padding: 2.5rem;
+  padding: 2.2rem;
   border-radius: 16px;
-  max-width: 680px;
+  max-width: 720px;
   width: 90%;
-  max-height: 85vh;
+  max-height: 88vh;
   overflow-y: auto;
   box-shadow: 0 15px 35px rgba(0,0,0,0.15);
 }
 
+.modal-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 12px;
+}
+
 .modal-card h3 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: #111;
   font-weight: 800;
-  margin-top: 0;
-  margin-bottom: 10px;
+  margin: 0;
   line-height: 1.3;
 }
 
-.modal-body-text {
-  margin: 1.5rem 0;
-  color: #2d3748;
-  line-height: 1.7;
-  font-size: 1.05rem;
-}
-
-/* Botón de cierre estilizado con tu paleta */
-.btn-submit {
+.img-modal-fluid {
   width: 100%;
-  padding: 12px;
-  border: none;
+  max-height: 280px;
+  object-fit: cover;
   border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s;
 }
 
-.btn-black {
+.modal-body-text {
+  margin: 1.2rem 0;
+  color: #2d3748;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.separator-line {
+  border: 0;
+  height: 1px;
+  background: #e2e8f0;
+  margin: 20px 0;
+}
+
+.comments-section-container {
+  background: #f8fafc;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid #edf2f7;
+}
+
+.comments-section-container h4 {
+  font-size: 0.98rem;
+  color: #281747;
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.comments-list-flow {
+  max-height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding-right: 6px;
+}
+
+.single-comment-bubble {
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border-left: 4px solid #4f347e;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.single-comment-bubble p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.comment-empty-state {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  padding: 15px 0;
+  font-style: italic;
+}
+
+.comment-write-box {
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 12px;
+}
+
+.comment-input-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #475569;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.comment-input-action-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.textarea-comment {
+  flex: 1;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  background-color: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.textarea-comment:focus {
+  border-color: #1aa39a;
+  box-shadow: 0 0 0 3px rgba(26, 163, 154, 0.1);
+}
+
+.btn-send-comment {
   background: #1e293b;
-  color: white;
+  color: #ffffff;
+  border: none;
+  padding: 11px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
 }
 
-.btn-black:hover {
+.btn-send-comment:hover {
   background: #0f172a;
 }
 
-/* Utilidades de animación */
+.btn-form-cancel {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-form-cancel:hover {
+  background-color: #e2e8f0;
+}
+
+.mb-3 { margin-bottom: 1rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-5 { margin-top: 3.5rem; }
+
 .animate-scaleUp {
   animation: scaleUp 0.2s ease-out;
 }
@@ -383,13 +503,15 @@
   to { transform: scale(1); opacity: 1; }
 }
 
-.mt-5 { margin-top: 3.5rem; }
-.animate-fade { animation: fadeIn 0.25s ease-in-out; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.animate-fade {
+  animation: fadeIn 0.25s ease-in-out;
+}
 
-/* ==========================================================================
-   RESPONSIVE DESIGN (Garantiza orden simétrico en cualquier pantalla)
-   ========================================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @media (max-width: 850px) {
   .noticias-layout-complex { grid-template-columns: 1fr; }
   .grid-horoscopos-simetrica { grid-template-columns: repeat(2, 1fr); }
@@ -400,4 +522,6 @@
   .filter-field.drop-field { max-width: 100%; }
   .noticias-secondary-grid { grid-template-columns: 1fr; }
   .grid-horoscopos-simetrica { grid-template-columns: 1fr; }
+  .comment-input-action-row { flex-direction: column; align-items: stretch; }
+  .btn-send-comment { width: 100%; text-align: center; }
 }

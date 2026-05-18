@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing-module';
 import { PerfilEditorComponent } from './perfil-editor/perfil-editor';
 import { AdminComponent } from './admin/admin';
 import { LectorComponent } from './lector/lector';
+import { ComentadorComponent } from './comentador/comentador';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LectorComponent } from './lector/lector';
     PerfilEditorComponent,
     AdminComponent,
     LectorComponent,
+    ComentadorComponent,
   ],
   imports: [BrowserModule, CommonModule, RouterModule, AppRoutingModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],
