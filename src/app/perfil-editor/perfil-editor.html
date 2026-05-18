@@ -1,0 +1,200 @@
+<div class="workspace-editor animate-fade">
+
+  <nav class="navbar-interno-editor">
+    <div class="brand-logo-container">
+      <img src="logo.png" alt="NextGen Digital Logo" class="logo-imagen-subida">
+    </div>
+
+    <div class="user-status-ribbon">
+      <span class="user-badge">👤 {{ nombreUsuarioLogueado }}</span>
+      <span class="role-pill">EDITOR</span>
+      <button class="btn-logout-retro" (click)="cerrarSesionEditor()">Cerrar Sesión 🚪</button>
+    </div>
+  </nav>
+
+  <div class="magazine-content-layout">
+
+    <div class="editor-control-ribbon">
+      <span class="ribbon-title">📋 Edita, crea o elimina publicaciones del sistema central</span>
+      <button class="btn-add-entry" (click)="abrirModalCrear()">➕ REDACTAR NUEVA PUBLICACIÓN</button>
+    </div>
+
+    <div class="filter-search-container">
+      <div class="filter-field">
+        <span class="filter-icon">🔍</span>
+        <input
+          type="text"
+          placeholder="Buscar noticia o horóscopo..."
+          [(ngModel)]="busquedaTexto"
+          (ngModelChange)="filtrarPublicaciones()"
+          class="input-search">
+      </div>
+
+      <div class="filter-field drop-field">
+        <span class="filter-icon">📁</span>
+        <select
+          [(ngModel)]="filtroTipo"
+          (ngModelChange)="filtrarPublicaciones()"
+          class="select-filter">
+          <option value="TODO">Tipo: Todo el contenido</option>
+          <option value="NOTICIA">Noticias</option>
+          <option value="HOROSCOPO">Horóscopos</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="noticias.length === 0 && horoscopos.length === 0" class="no-results-card">
+      📭 No se encontraron publicaciones registradas en la base de datos del servidor.
+    </div>
+
+    <div *ngIf="noticias.length > 0" class="seccion-bloque-editorial">
+      <h2 class="editor-main-title">📰 SECCIÓN DE NOTICIAS</h2>
+
+      <div class="noticias-layout-complex">
+
+        <div class="noticia-featured-card" (click)="abrirPublicacion(noticias[0])">
+          <div class="featured-image-wrapper">
+            <img *ngIf="noticias[0].imagenUrl" [src]="noticias[0].imagenUrl" class="img-content-fluid" alt="Noticia Principal">
+            <div *ngIf="!noticias[0].imagenUrl" class="placeholder-img-big">🖼️ Imagen no especificada en BD</div>
+
+            <div class="card-editor-overlay">
+              <button class="btn-overlay-action edit-color" (click)="$event.stopPropagation(); editarItem(noticias[0])">
+                ✏️ Editar
+              </button>
+              <button class="btn-overlay-action delete-color" (click)="$event.stopPropagation(); pedirConfirmacionEliminar(noticias[0])">
+                🗑️ Eliminar
+              </button>
+            </div>
+          </div>
+          <div class="featured-info">
+            <span class="badge-tipo-publicacion color-noticia">{{ noticias[0].tipo }}</span>
+            <span *ngIf="noticias[0].categoria" class="badge-tipo-publicacion color-categoria">📁 {{ noticias[0].categoria }}</span>
+            <h3>{{ noticias[0].titulo }}</h3>
+            <p>{{ noticias[0].contenido }}</p>
+          </div>
+        </div>
+
+        <div class="noticias-secondary-grid">
+          <ng-container *ngFor="let item of noticias; let i = index">
+            <div class="card-publicacion" *ngIf="i > 0" (click)="abrirPublicacion(item)">
+              <div class="image-wrapper">
+                <img *ngIf="item.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Noticia">
+                <div *ngIf="!item.imagenUrl" class="placeholder-img">🖼️</div>
+
+                <div class="card-editor-overlay">
+                  <button class="btn-overlay-action edit-color" (click)="$event.stopPropagation(); editarItem(item)">
+                    ✏️ Editar
+                  </button>
+                  <button class="btn-overlay-action delete-color" (click)="$event.stopPropagation(); pedirConfirmacionEliminar(item)">
+                    🗑️ Eliminar
+                  </button>
+                </div>
+              </div>
+              <div class="card-info">
+                <span class="badge-tipo-publicacion color-noticia">{{ item.tipo }}</span>
+                <span *ngIf="item.categoria" class="badge-tipo-publicacion color-categoria">📁 {{ item.categoria }}</span>
+                <h4>{{ item.titulo }}</h4>
+                <p class="card-summary">{{ item.contenido }}</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="horoscopos.length > 0" class="seccion-bloque-editorial mt-5">
+      <h2 class="editor-main-title">🔮 SECCIÓN DE HORÓSCOPOS</h2>
+
+      <div class="grid-horoscopos-simetrica">
+        <div class="card-publicacion horoscopo-card" *ngFor="let item of horoscopos" (click)="abrirPublicacion(item)">
+          <div class="image-wrapper">
+            <img *ngIf="item.imagenUrl" [src]="item.imagenUrl" class="img-content" alt="Signo Zodiacal">
+            <div *ngIf="!item.imagenUrl" class="placeholder-img">✨</div>
+
+            <div class="card-editor-overlay">
+              <button class="btn-overlay-action edit-color" (click)="$event.stopPropagation(); editarItem(item)">
+                ✏️ Editar
+              </button>
+              <button class="btn-overlay-action delete-color" (click)="$event.stopPropagation(); pedirConfirmacionEliminar(item)">
+                🗑️ Eliminar
+              </button>
+            </div>
+          </div>
+          <div class="card-info">
+            <span class="badge-tipo-publicacion color-horoscopo">{{ item.tipo }}</span>
+            <h4>{{ item.titulo }}</h4>
+            <p class="card-summary text-center-zodiac">{{ item.contenido }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="modalFormularioAbierto">
+  <div class="modal-card form-modal-layout">
+    <div class="modal-form-header">
+      <h3>{{ modoEdicion ? '✏️ EDITAR ' + tipoForm : '✨ REDACTAR NUEVA PUBLICACIÓN' }}</h3>
+      <p class="form-subtitle">Completa los campos básicos para actualizar el sistema central</p>
+    </div>
+
+    <div class="modal-form-body">
+      <div class="form-group-field" *ngIf="!modoEdicion">
+        <label>Tipo de Contenido a Redactar</label>
+        <select [(ngModel)]="tipoForm">
+          <option value="NOTICIA">Noticia General</option>
+          <option value="HOROSCOPO">Horóscopo / Astronomía</option>
+        </select>
+      </div>
+
+      <div class="form-group-field">
+        <label>Título / Signo</label>
+        <input type="text" [(ngModel)]="tituloForm" placeholder="Escribe el título o signo aquí...">
+      </div>
+
+      <div class="form-group-field">
+        <label>URL de la Imagen (Opcional)</label>
+        <input type="text" [(ngModel)]="urlImagenForm" placeholder="https://ejemplo.com/imagen.png">
+      </div>
+
+      <div class="form-group-field">
+        <label>Cuerpo / Desarrollo del Contenido</label>
+        <textarea rows="6" [(ngModel)]="contenidoForm" placeholder="Escribe todo el desarrollo de la publicación aquí..."></textarea>
+      </div>
+    </div>
+
+    <div class="modal-form-actions">
+      <button class="btn-form-cancel" (click)="modalFormularioAbierto = false">Cancelar</button>
+      <button class="btn-form-save" (click)="guardarPublicacion()">
+        {{ modoEdicion ? 'Actualizar Cambios' : 'Publicar Ahora 🚀' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="publicacionSeleccionada">
+  <div class="modal-card">
+    <h3>{{ publicacionSeleccionada.titulo }}</h3>
+    <span class="badge-tipo-publicacion" [ngClass]="publicacionSeleccionada.tipo === 'NOTICIA' ? 'color-noticia' : 'color-horoscopo'">
+      {{ publicacionSeleccionada.tipo }}
+    </span>
+    <p class="modal-body-text">{{ publicacionSeleccionada.contenido }}</p>
+    <button class="btn-submit btn-black" (click)="publicacionSeleccionada = null">Cerrar Visualización</button>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="publicacionParaEliminar">
+  <div class="modal-card confirmation-card">
+    <h3>⚠️ ¿Confirmas la eliminación?</h3>
+    <p class="modal-body-text text-center">
+      Estás a punto de borrar permanentemente la publicación titulada:<br>
+      <strong>"{{ publicacionParaEliminar.titulo }}"</strong>.<br>Esta acción no se puede deshacer.
+    </p>
+    <div class="modal-form-actions mt-4">
+      <button class="btn-form-cancel" (click)="publicacionParaEliminar = null">Cancelar</button>
+      <button class="btn-overlay-action delete-color px-4" (click)="confirmarBorradoBackend()">Eliminar de la BD</button>
+    </div>
+  </div>
+</div>

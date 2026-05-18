@@ -1,0 +1,267 @@
+/* Contenedor total de la pantalla de Registro */
+.register-fullscreen-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #e2ded9; /* Fondo claro texturizado idéntico a tu captura */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  font-family: 'Times New Roman', Times, serif, sans-serif;
+  position: relative;
+
+
+  background-image:
+    linear-gradient(90deg, rgba(255,255,255,0.07) 50%, transparent 50%),
+    linear-gradient(rgba(0,0,0,0.05) 50%, transparent 50%),
+    radial-gradient(rgba(0,0,0,0.06) 1px, transparent 0),
+    radial-gradient(rgba(255,255,255,0.1) 1px, transparent 0) !important;
+  background-size: 6px 6px, 4px 4px, 3px 3px, 5px 5px !important;
+}
+
+/* Botón superior izquierdo cromado/metálico */
+.btn-back-magazine {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  background: linear-gradient(180deg, #ffffff 0%, #eae2be 50%, #eae2be 100%);
+  border: 2px solid #ffffff;
+  padding: 10px 22px;
+  border-radius: 25px;
+  font-weight: bold;
+  color: #2b2b2b;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.btn-back-magazine:hover {
+  filter: brightness(1.05);
+}
+
+/* Tarjeta centrada con degradado morado/rosa */
+.form-card-centered {
+  width: 100%;
+  max-width: 540px;
+  background: linear-gradient(145deg, #f1e6d8 0%, #f1e6d8 60%, #9ca1df 100%);
+  border-radius: 12px;
+  padding: 35px 40px;
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.25);
+  color: #050505;
+  box-sizing: border-box;
+}
+
+/* Encabezado y barra de progreso circular */
+.form-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.main-title {
+  font-size: 22px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.progress-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  position: relative;
+  width: 160px;
+  margin: 0 auto;
+}
+
+.progress-line {
+  position: absolute;
+  height: 2px;
+  background-color: rgb(5, 5, 5);
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgb(5, 5, 5);
+  background-color: transparent;
+  z-index: 2;
+}
+
+.step-dot.active {
+  background-color: #050505;
+  border-color: #050505;
+  box-shadow: 0 0 8px #050505;
+}
+
+/* Cajas de texto (Inputs) oscuras y redondeadas */
+.input-group {
+  position: relative;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.input-group .icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgb(5, 5, 5);
+  font-size: 16px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 15px 12px 45px;
+  background-color: rgba(24, 21, 26, 0.75);
+  border: 1px solid rgba(104, 102, 102, 0.1);
+  border-radius: 8px;
+  color: #050505;
+  font-size: 15px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Grupo selector de Roles (Estilo chips de la captura) */
+.role-selection-group {
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.group-label {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.roles-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.chip-option {
+  cursor: pointer;
+}
+
+.chip-option input[type="radio"] {
+  display: none; /* Escondemos el radio nativo redondo */
+}
+
+.chip-option span {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #2b2b2b;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+/* Colores personalizados de cada Chip basado en tu maqueta */
+.administrativo span { background-color: #bb9cef; }
+.editor span { background-color: #bb9cef; }
+.comentador span { background-color: #bb9cef; }
+.usuario span { background-color: #bb9cef; }
+.sin-autenticar span { background-color: #bb9cef; }
+
+/* Efecto visual cuando seleccionan un chip de rol */
+.chip-option input[type="radio"]:checked + span {
+  border-color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Textos informativos inferiores */
+.role-info-text {
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgb(5, 5, 5);
+  margin-bottom: 15px;
+  text-align: justify;
+}
+
+.terms-text {
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+}
+
+.underline {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Botón grande de someter Verde */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: none;
+  box-sizing: border-box;
+}
+
+.btn-green {
+  background-color: #4f347e;
+  color: #ffffff;
+  box-shadow: 0px 4px 12px rgba(143, 93, 230, 0.3);
+  transition: background-color 0.2s;
+}
+
+.btn-green:hover {
+  background-color: #bb9cef;
+}
+
+/* Sección inferior para regresar al Login de la revista */
+.switch-auth-mode {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 14px;
+}
+
+.user-icon-inline {
+  color: rgb(5, 5, 5);
+}
+
+.btn-signin-link {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 18px;
+  border-radius: 6px;
+  color: #050505;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.2s;
+}
+
+.btn-signin-link:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

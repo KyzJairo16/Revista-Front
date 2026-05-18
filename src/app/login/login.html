@@ -1,0 +1,93 @@
+<div class="register-fullscreen-container">
+
+  <button class="btn-back-magazine" (click)="volverARevista()">
+    <span class="arrow">←</span> VOLVER AL INICIO
+  </button>
+
+  <div class="form-card-centered table-registro-gradient">
+
+    <div class="form-header">
+      <h2 class="main-title">DATOS PERSONALES</h2>
+      <div class="progress-bar-container">
+        <div class="progress-line"></div>
+        <span class="step-dot active"></span>
+        <span class="step-dot"></span>
+        <span class="step-dot"></span>
+      </div>
+    </div>
+
+    <form class="form-section">
+
+      <div class="input-group">
+        <span class="icon">👤</span>
+        <input type="text" [(ngModel)]="nombreCompleto" name="nombre" placeholder="Nombre Completo">
+      </div>
+
+      <div class="input-group">
+        <span class="icon">🆔</span>
+        <input type="text" [(ngModel)]="nombreUsuario" name="usuario" placeholder="Nombre de Usuario">
+      </div>
+
+      <div class="input-group">
+        <span class="icon">🔒</span>
+        <input type="password" [(ngModel)]="contrasenia" name="password" placeholder="Contraseña">
+      </div>
+
+      <div class="input-group">
+        <span class="icon">🔒</span>
+        <input type="password" [(ngModel)]="confirmarContrasenia" name="confirmPassword" placeholder="Confirmar Contraseña">
+      </div>
+
+      <div class="role-selection-group">
+        <label class="group-label">Selecciona tu Rol</label>
+        <div class="roles-chips">
+
+          <label class="chip-option administrativo">
+            <input type="radio" name="rolTaller" value="ADMINISTRATIVO" [(ngModel)]="rolSeleccionado">
+            <span>ADMINISTRATIVO</span>
+          </label>
+
+          <label class="chip-option editor">
+            <input type="radio" name="rolTaller" value="EDITOR" [(ngModel)]="rolSeleccionado">
+            <span>EDITOR</span>
+          </label>
+
+          <label class="chip-option comentador">
+            <input type="radio" name="rolTaller" value="COMENTADOR" [(ngModel)]="rolSeleccionado">
+            <span>COMENTADOR</span>
+          </label>
+
+          <label class="chip-option usuario">
+            <input type="radio" name="rolTaller" value="USUARIO" [(ngModel)]="rolSeleccionado">
+            <span>USUARIO</span>
+          </label>
+
+          <label class="chip-option sin-autenticar">
+            <input type="radio" name="rolTaller" value="SIN_AUTENTICAR" [(ngModel)]="rolSeleccionado">
+            <span>SIN AUTENTICAR</span>
+          </label>
+
+        </div>
+      </div>
+
+      <p class="role-info-text">
+        Dependiendo de tu rol, podrás crear, modificar o eliminar revistas (Editor), listar y comentar (Comentador), o solo leer (Usuario). Un rol no autenticado no tendrá acceso a las noticias hasta autenticarse.
+      </p>
+
+      <p class="terms-text">
+        Al registrarte, aceptas nuestros términos de servicio.<br>
+        Este proyecto se comunica usando tecnología JWT.
+      </p>
+
+      <button type="button" class="btn-submit btn-green" (click)="registrarUsuario()">
+        CREAR CUENTA
+      </button>
+    </form>
+
+    <div class="switch-auth-mode">
+      <div class="user-icon-inline">👤 ¿Ya tienes una cuenta?</div>
+      <button type="button" class="btn-signin-link" (click)="volverARevista()">INICIAR SESIÓN</button>
+    </div>
+
+  </div>
+</div>
