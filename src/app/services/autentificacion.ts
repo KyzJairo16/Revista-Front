@@ -16,16 +16,27 @@ export class AutentificacionService {
 
   /**
    * Envía las credenciales reales a Spring Boot.
-   * Guarda el token, el rol y capturamos el nombre de usuario ingresado.
+   * Guarda el token, el rol normalizado y el nombre de usuario ingresado.
    */
   login(credenciales: any): Observable<any> {
     return this.http.post<any>(`${this.URL_API}/login`, credenciales).pipe(
       tap(respuesta => {
         if (respuesta && respuesta.token) {
           localStorage.setItem('token_revista', respuesta.token);
-          localStorage.setItem('rol_revista', respuesta.rol);
 
-          // Guardamos el username que se usó para loguearse con éxito
+          // Normalizar el rol directamente al recibirlo del backend
+          let rolBackend = respuesta.rol ? respuesta.rol.toUpperCase().trim() : 'USUARIO';
+          if (rolBackend.startsWith('ROLE_')) {
+            rolBackend = rolBackend.replace('ROLE_', '');
+          }
+          if (rolBackend === 'ADMINISTRADOR') {
+            rolBackend = 'ADMINISTRATIVO';
+          }
+          if (rolBackend === 'SUSCRIPTOR') {
+            rolBackend = 'USUARIO';
+          }
+
+          localStorage.setItem('rol_revista', rolBackend);
           localStorage.setItem('nombre_usuario', credenciales.username);
         }
       })
@@ -62,13 +73,21 @@ export class AutentificacionService {
       rolDetectado = localStorage.getItem('rol_revista') || 'SIN_AUTENTICAR';
     }
 
-    // CONTROL DE DAÑOS: Si Spring Boot devuelve "ROLE_ADMINISTRADOR", le quitamos el "ROLE_"
+    // CONTROL DE DAÑOS: Limpieza de prefijos de Spring Security
     if (rolDetectado.startsWith('ROLE_')) {
       rolDetectado = rolDetectado.replace('ROLE_', '');
     }
 
-    // Retornamos todo en mayúsculas y sin espacios fantasmas
-    return rolDetectado.toUpperCase().trim();
+    rolDetectado = rolDetectado.toUpperCase().trim();
+
+    // Sincronización final estricta de roles administrativos y de lectura
+    if (rolDetectado === 'ADMINISTRADOR') {
+      rolDetectado = 'ADMINISTRATIVO';
+    } else if (rolDetectado === 'SUSCRIPTOR') {
+      rolDetectado = 'USUARIO';
+    }
+
+    return rolDetectado;
   }
 
   /**

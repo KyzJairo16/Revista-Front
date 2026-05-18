@@ -34,20 +34,15 @@ export class PerfilEditorComponent implements OnInit {
   noticias: Publicacion[] = [];
   horoscopos: Publicacion[] = [];
 
-  // Filtros superiores
   filtroTipo: string = 'TODO';
   busquedaTexto: string = '';
   publicacionSeleccionada: Publicacion | null = null;
-
-  // Control para borrados
   publicacionParaEliminar: Publicacion | null = null;
 
-  // === ESTADO PARA CREACIÓN Y EDICIÓN ===
   modalFormularioAbierto: boolean = false;
   modoEdicion: boolean = false;
   publicacionEnEdicionOriginal: Publicacion | null = null;
 
-  // Campos del formulario modal
   idPublicacionForm: number | undefined = undefined;
   tituloForm: string = '';
   contenidoForm: string = '';
@@ -69,14 +64,18 @@ export class PerfilEditorComponent implements OnInit {
       next: (noticiasBack) => {
         const noticiasMapeadas = (noticiasBack || []).map((n: any) => ({
           ...n,
-          tipo: 'NOTICIA' as const
+          tipo: 'NOTICIA' as const,
+          titulo: n.titulo || 'Sin Título',
+          contenido: n.contenido || ''
         }));
 
         this.http.get<any[]>('http://localhost:8080/api/horoscopos/listar', this.autentificacionService.getHeaders()).subscribe({
           next: (horoscoposBack) => {
             const horoscoposMapeados = (horoscoposBack || []).map((h: any) => ({
               ...h,
-              tipo: 'HOROSCOPO' as const
+              tipo: 'HOROSCOPO' as const,
+              titulo: h.signoZodiacal || h.titulo || 'Signo Desconocido',
+              contenido: h.prediccion || h.contenido || ''
             }));
 
             this.listaPublicaciones = [...noticiasMapeadas, ...horoscoposMapeados];
@@ -126,8 +125,6 @@ export class PerfilEditorComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  // === MÉTODOS DEL FORMULARIO MODAL ===
-
   abrirModalCrear(): void {
     this.modoEdicion = false;
     this.publicacionEnEdicionOriginal = null;
@@ -170,103 +167,84 @@ export class PerfilEditorComponent implements OnInit {
 
     if (this.modoEdicion && this.publicacionEnEdicionOriginal) {
       payload = { ...this.publicacionEnEdicionOriginal };
-
-      payload.titulo = this.tituloForm;
-      payload.contenido = this.contenidoForm;
-      payload.imagenUrl = this.urlImagenForm.trim() !== '' ? this.urlImagenForm : null;
+      payload.titulo = this.tituloForm.trim();
+      payload.contenido = this.contenidoForm.trim();
+      payload.imagenUrl = this.urlImagenForm.trim() !== '' ? this.urlImagenForm.trim() : null;
 
       if (this.tipoForm === 'NOTICIA') {
         payload.categoria = this.categoriaForm;
         payload.fuente = payload.fuente || 'Revista Digital';
       } else {
-        payload.signoZodiacal = this.tituloForm;
-        payload.prediccion = this.contenidoForm;
+        payload.signoZodiacal = this.tituloForm.trim();
+        payload.prediccion = this.contenidoForm.trim();
       }
     } else {
       payload = {
-        id: 0,
-        titulo: this.tituloForm,
-        contenido: this.contenidoForm,
-        autor: this.nombreUsuarioLogueado,
-        fechaPublicacion: fechaIsoActual,
-        imagenUrl: this.urlImagenForm.trim() !== '' ? this.urlImagenForm : null
+        id: null, // Dejar en null para evitar colisiones con GenerationType.IDENTITY en Hibernate
+        titulo: this.tituloForm.trim(),
+        contenido: this.contenidoForm.trim(),
+        imagenUrl: this.urlImagenForm.trim() !== '' ? this.urlImagenForm.trim() : null
       };
 
       if (this.tipoForm === 'NOTICIA') {
+        payload.autor = this.nombreUsuarioLogueado;
+        payload.fechaPublicacion = fechaIsoActual;
         payload.categoria = 'General';
         payload.fuente = 'Revista Digital';
       } else {
-        payload.signoZodiacal = this.tituloForm;
-        payload.prediccion = this.contenidoForm;
+        payload.fechaPublicacion = fechaIsoActual;
+        payload.signoZodiacal = this.tituloForm.trim();
+        payload.prediccion = this.contenidoForm.trim();
       }
     }
 
+    const opcionesRequest = {
+      headers: this.autentificacionService.getHeaders().headers,
+      responseType: 'text' as 'json'
+    };
+
     if (this.modoEdicion) {
       const urlRutaPut = `${urlBase}/actualizar/${this.idPublicacionForm}`;
-      const opcionesRequest = {
-        headers: this.autentificacionService.getHeaders().headers,
-        responseType: 'text' as 'json'
-      };
 
       this.http.put(urlRutaPut, payload, opcionesRequest).subscribe({
         next: () => {
           alert('¡Publicación actualizada con éxito!');
-
-          this.listaPublicaciones = this.listaPublicaciones.map((pub): Publicacion => {
-            if (pub.id === this.idPublicacionForm) {
-              return {
-                ...pub,
-                titulo: this.tituloForm,
-                contenido: this.contenidoForm,
-                imagenUrl: this.urlImagenForm.trim() !== '' ? this.urlImagenForm : null,
-                categoria: this.tipoForm === 'NOTICIA' ? this.categoriaForm : pub.categoria
-              };
-            }
-            return pub;
-          });
-
-          this.filtrarPublicaciones();
+          this.cargarContenidoEditor();
           this.modalFormularioAbierto = false;
         },
         error: (err) => {
-          if (err.status !== 200) {
-            alert(`❌ Error al actualizar (${err.status}).`);
-          } else {
+          if (err.status === 200 || err.status === 201) {
             alert('¡Publicación actualizada con éxito!');
             this.cargarContenidoEditor();
             this.modalFormularioAbierto = false;
+          } else {
+            console.error(err);
+            alert(`❌ Error al actualizar (${err.status}).`);
           }
         }
       });
     } else {
       const urlRutaPost = `${urlBase}/crear`;
-      this.http.post<any>(urlRutaPost, payload, this.autentificacionService.getHeaders()).subscribe({
-        next: (objetoCreado) => {
+
+      this.http.post(urlRutaPost, payload, opcionesRequest).subscribe({
+        next: () => {
           alert('¡Nueva publicación creada con éxito!');
-
-          const nuevaPublicacion: Publicacion = {
-            id: objetoCreado && objetoCreado.id ? objetoCreado.id : Math.floor(Math.random() * 10000),
-            titulo: this.tituloForm,
-            contenido: this.contenidoForm,
-            tipo: this.tipoForm,
-            imagenUrl: this.urlImagenForm.trim() !== '' ? this.urlImagenForm : null,
-            categoria: this.tipoForm === 'NOTICIA' ? 'General' : undefined,
-            autor: this.nombreUsuarioLogueado,
-            fechaPublicacion: fechaIsoActual
-          };
-
-          this.listaPublicaciones = [nuevaPublicacion, ...this.listaPublicaciones];
-          this.filtrarPublicaciones();
+          this.cargarContenidoEditor();
           this.modalFormularioAbierto = false;
         },
         error: (err) => {
-          alert(`❌ Error al crear la publicación (${err.status})`);
+          if (err.status === 200 || err.status === 201) {
+            alert('¡Nueva publicación creada con éxito!');
+            this.cargarContenidoEditor();
+            this.modalFormularioAbierto = false;
+          } else {
+            console.error(err);
+            alert(`❌ Error al crear la publicación (${err.status})`);
+          }
         }
       });
     }
   }
-
-  // === MÉTODOS PARA ELIMINACIÓN ===
 
   pedirConfirmacionEliminar(item: Publicacion): void {
     this.publicacionSeleccionada = null;
@@ -289,26 +267,21 @@ export class PerfilEditorComponent implements OnInit {
     };
 
     this.http.delete(urlRutaDelete, opcionesRequest).subscribe({
-      next: (respuestaTexto) => {
-        console.log('Borrado exitoso:', respuestaTexto);
+      next: () => {
         alert('🗑️ La publicación ha sido eliminada correctamente del servidor.');
-
-        // Remover del estado local en memoria instantáneamente
         this.listaPublicaciones = this.listaPublicaciones.filter(p => p.id !== this.publicacionParaEliminar?.id);
         this.filtrarPublicaciones();
-
         this.publicacionParaEliminar = null;
       },
       error: (err) => {
-        console.error('Error al eliminar:', err);
-        if (err.status !== 200) {
-          alert(`❌ No se pudo eliminar la publicación (${err.status}).`);
-        } else {
-          // Si responde con texto plano y estatus 200 pero salta por el parser
+        if (err.status === 200 || err.status === 201) {
           alert('🗑️ La publicación ha sido eliminada correctamente del servidor.');
           this.listaPublicaciones = this.listaPublicaciones.filter(p => p.id !== this.publicacionParaEliminar?.id);
           this.filtrarPublicaciones();
           this.publicacionParaEliminar = null;
+        } else {
+          console.error('Error al eliminar:', err);
+          alert(`❌ No se pudo eliminar la publicación (${err.status}).`);
         }
       }
     });

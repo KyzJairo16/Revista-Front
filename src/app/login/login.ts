@@ -5,22 +5,22 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   standalone: false,
-  templateUrl: './login.html',
-  styleUrls: ['./login.css'],
+  templateUrl: './login.html', // <-- Apuntando correctamente a su propio HTML
+  styleUrls: ['./login.css']
 })
 export class LoginComponent {
   private router = inject(Router);
   private http = inject(HttpClient);
 
-  // Variables bindeadas con el HTML
-  nombreCompleto: string = ''; // Lo dejamos solo para la experiencia del usuario en pantalla
+  // Propiedades bindeades con [(ngModel)] en la vista
+  nombreCompleto: string = '';
   nombreUsuario: string = '';
   contrasenia: string = '';
   confirmarContrasenia: string = '';
-  rolSeleccionado: string = 'USUARIO'; // Coincide con los valores de tu Enum Rol
+  rolSeleccionado: string = 'USUARIO';
 
   registrarUsuario(): void {
-    // 1. Validamos los campos requeridos en la interfaz
+    // 1. Validaciones de campos vacíos
     if (!this.nombreUsuario.trim() || !this.contrasenia.trim()) {
       alert('Por favor, completa el nombre de usuario y la contraseña.');
       return;
@@ -32,24 +32,41 @@ export class LoginComponent {
       return;
     }
 
-    // 3. Estructura idéntica a tu UsuarioDTO de Spring Boot
+    // 3. Normalización del Rol elegido para Spring Security
+    let rolFinal = this.rolSeleccionado.toUpperCase().trim();
+    if (rolFinal === 'SIN_AUTENTICAR') {
+      rolFinal = 'USUARIO'; // Fallback de seguridad en caso de inconsistencia
+    }
+
+    // 4. Estructura del payload DTO para el AuthController de Java
     const payloadRegistro = {
       username: this.nombreUsuario.trim(),
       password: this.contrasenia,
-      rol: this.rolSeleccionado.toUpperCase() // Pasa como String y Spring lo convierte al Enum Rol automáticamente
+      rol: rolFinal
     };
 
-    // 4. Consumo del endpoint mediante POST
-    this.http.post('http://localhost:8080/api/auth/register', payloadRegistro, { responseType: 'text' }).subscribe({
+    const opcionesRequest = {
+      responseType: 'text' as 'json'
+    };
+
+    // 5. Consumo del endpoint REST con Spring Boot
+    this.http.post('http://localhost:8080/api/auth/register', payloadRegistro, opcionesRequest).subscribe({
       next: (respuesta) => {
-        alert(`¡Registro Exitoso en Spring Boot!\nUsuario registrado: ${payloadRegistro.username}`);
+        alert(`¡Registro Exitoso en el Servidor!\nUsuario registrado: ${payloadRegistro.username}`);
         this.router.navigate(['/']);
       },
       error: (err) => {
-        console.warn('Fallo en la comunicación directa o servidor apagado. Activando mock.');
-        alert(`Cuenta Creada Exitosamente.\nUsuario: ${payloadRegistro.username}\nRol: ${payloadRegistro.rol}`);
-        this.router.navigate(['/']);
-      },
+        console.error('Error capturado durante el registro:', err);
+
+        if (err.status === 409 || err.status === 400) {
+          alert('❌ Error: El nombre de usuario ya se encuentra registrado en el sistema.');
+        } else if (err.status === 200 || err.status === 201) {
+          alert(`¡Registro Exitoso!\nUsuario registrado: ${payloadRegistro.username}`);
+          this.router.navigate(['/']);
+        } else {
+          alert(`❌ No se pudo crear la cuenta. Servidor inaccesible o código de error: ${err.status}`);
+        }
+      }
     });
   }
 

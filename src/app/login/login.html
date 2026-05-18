@@ -16,26 +16,26 @@
       </div>
     </div>
 
-    <form class="form-section">
+    <form class="form-section" (submit)="$event.preventDefault()">
 
       <div class="input-group">
         <span class="icon">👤</span>
-        <input type="text" [(ngModel)]="nombreCompleto" name="nombre" placeholder="Nombre Completo">
+        <input type="text" [(ngModel)]="nombreCompleto" name="nombreCompleto" placeholder="Nombre Completo">
       </div>
 
       <div class="input-group">
         <span class="icon">🆔</span>
-        <input type="text" [(ngModel)]="nombreUsuario" name="usuario" placeholder="Nombre de Usuario">
+        <input type="text" [(ngModel)]="nombreUsuario" name="nombreUsuario" placeholder="Nombre de Usuario">
       </div>
 
       <div class="input-group">
         <span class="icon">🔒</span>
-        <input type="password" [(ngModel)]="contrasenia" name="password" placeholder="Contraseña">
+        <input type="password" [(ngModel)]="contrasenia" name="contrasenia" placeholder="Contraseña">
       </div>
 
       <div class="input-group">
         <span class="icon">🔒</span>
-        <input type="password" [(ngModel)]="confirmarContrasenia" name="confirmPassword" placeholder="Confirmar Contraseña">
+        <input type="password" [(ngModel)]="confirmarContrasenia" name="confirmarContrasenia" placeholder="Confirmar Contraseña">
       </div>
 
       <div class="role-selection-group">
@@ -71,12 +71,12 @@
       </div>
 
       <p class="role-info-text">
-        Dependiendo de tu rol, podrás crear, modificar o eliminar revistas (Editor), listar y comentar (Comentador), o solo leer (Usuario). Un rol no autenticado no tendrá acceso a las noticias hasta autenticarse.
+        Dependiendo de tu rol, podrás crear o modificar publicaciones (Editor), listar y comentar (Comentador), o solo leer (Usuario). Un rol administrativo tendrá acceso al panel de control general de usuarios.
       </p>
 
       <p class="terms-text">
         Al registrarte, aceptas nuestros términos de servicio.<br>
-        Este proyecto se comunica usando tecnología JWT.
+        Este proyecto se comunica usando tecnología JWT y Spring Security.
       </p>
 
       <button type="button" class="btn-submit btn-green" (click)="registrarUsuario()">
