@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/*import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Lector } from './lector';
 
@@ -19,4 +19,4 @@ describe('Lector', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+});*/

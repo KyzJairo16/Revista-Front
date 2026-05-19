@@ -109,7 +109,7 @@ export class ComentadorComponent implements OnInit {
     this.publicacionSeleccionada.comentarios.push(comentarioFormateado);
 
     this.nuevoComentarioTexto = '';
-    alert('💬 ¡Comentario añadido a la publicación!');
+    alert('¡Comentario añadido a la publicación!');
   }
 
   cerrarSesion(): void {
