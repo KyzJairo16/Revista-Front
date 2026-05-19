@@ -19,7 +19,7 @@ export class AutentificacionService {
         if (respuesta && respuesta.token) {
           localStorage.setItem('token_revista', respuesta.token);
 
-          // Guardamos el rol limpio del backend directamente pasándolo a mayúsculas
+
           let rolBackend = respuesta.rol ? respuesta.rol.toUpperCase().trim() : 'USUARIO';
 
           if (rolBackend.startsWith('ROLE_')) {

@@ -21,6 +21,11 @@ export class LoginComponent {
 
   registrarUsuario(): void {
 
+    if (this.rolSeleccionado === 'SIN_AUTENTICAR') {
+      alert(' No puedes crear una cuenta sin autenticarte. Elige un rol.');
+      return;
+    }
+
     if (!this.nombreUsuario.trim() || !this.contrasenia.trim()) {
       alert('Por favor, completa el nombre de usuario y la contraseña.');
       return;
@@ -35,7 +40,7 @@ export class LoginComponent {
 
     let rolFinal = this.rolSeleccionado.toUpperCase().trim();
     if (rolFinal === 'SIN_AUTENTICAR') {
-      rolFinal = 'USUARIO'; // Fallback de seguridad en caso de inconsistencia
+      rolFinal = 'USUARIO';
     }
 
 
@@ -72,5 +77,9 @@ export class LoginComponent {
 
   volverARevista(): void {
     this.router.navigate(['/']);
+  }
+
+  alertaSinAutenticar(): void {
+    alert('⚠️ Para ingresar o crear una cuenta es obligatorio autenticarse. Por favor, selecciona un rol válido.');
   }
 }

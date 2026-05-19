@@ -63,7 +63,7 @@
           </label>
 
           <label class="chip-option sin-autenticar">
-            <input type="radio" name="rolTaller" value="SIN_AUTENTICAR" [(ngModel)]="rolSeleccionado">
+            <input type="radio" name="rolTaller" value="SIN_AUTENTICAR" [(ngModel)]="rolSeleccionado" (change)="alertaSinAutenticar()">
             <span>SIN AUTENTICAR</span>
           </label>
 
